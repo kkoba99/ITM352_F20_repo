@@ -1,22 +1,30 @@
 /* General */  
-body {
-    width: 800px;
-    margin: 0 auto; 
-    color:darkred;
-}
+
 /* Typography */  
-h1, h2 {
-    text-align: center;
-}
-footer {
-    text-align: center;
-}
+
 /* block styling */  
 
 /* Form styling */  
 
 /* Styling the products display */ 
- main {
+ 
+
+body {
+    width: 800px;
+    margin: 0 auto; 
+    color:darkred;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+main {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
@@ -24,23 +32,13 @@ footer {
     background-repeat: no-repeat;
     background-position: center;
 }
+
 div {
     border: 5px solid black;
     display: flex;
 }
-img {
-    width: 200px;
-    height: 200px;
+
+footer {
+    text-align: center;
 }
-
-
-
-
-
-
-
-
-
-
-
 
