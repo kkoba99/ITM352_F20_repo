@@ -1,27 +1,47 @@
 /* General */  
-
+body {
+    width: 800px;
+    margin: 0 auto; 
+    color:black;
+    background-color: whitesmoke;
+}
 /* Typography */  
+h1 {
+    text-align: center;
+    border: 2px solid black;
+    background-color: rgb(212, 227, 255);
+    border-radius: 25px;
+    font-family: 'Rajdhani', Semi-bold; 
+}
 
+h2 { 
+    text-align: center;
+    border: 2px solid black;
+    background-color: rgb(212, 227, 255);
+    font-family:"Open Sans";
+    font-size: medium;
+}
+
+footer {
+    font-size: 10px;
+    text-align: center;
+}
+
+p {
+    border: 2px solid black;
+    background-color: white;
+    text-align: center;
+    font-family:"Open Sans";
+}
 /* block styling */  
 
 /* Form styling */  
 
 /* Styling the products display */ 
- 
-
-body {
-    width: 800px;
-    margin: 0 auto; 
-    color:darkred;
-}
-
-img {
+ img {
     width: 200px;
     height: 200px;
-}
-
-h1, h2 {
-    text-align: center;
+    border: 2px solid black
 }
 
 main {
@@ -31,14 +51,15 @@ main {
     background-image: url("../SmartPhoneProducts1/images/phone_globe.jpg");
     background-repeat: no-repeat;
     background-position: center;
+    border-radius: 20px;
 }
 
 div {
     border: 5px solid black;
     display: flex;
+    border-radius: 27px;
 }
 
-footer {
-    text-align: center;
-}
+
+
 
