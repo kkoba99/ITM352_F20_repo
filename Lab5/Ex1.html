@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    hello
+    <script>
+
+        var firstName = "Kylee";
+        var middleName = "Kawailaniaokeanae";
+        var lastName = "Dean-Kobatake";
+        var fullName = firstName+ " " + middleName + " " + lastName
+        var formattedName = fullName + "<br>" + firstName[0] + "." + lastName[0] + "." + "<br>";
+        document.write(formattedName);
+    
+        var str = new String ("Kylee" + " ");
+        document.write(str.bold());
+
+        var str = new String ("Kawailaniaokeanae" + " ");
+        document.write(str.italics());
+
+        var str = new String ("Dean-Kobatake");
+        document.write(str.fontsize(10)) + "<br>";
+
+        var number = 20.00 * 0.0413; 
+        number.toFixed(number);
+       
+    </script>
+    <div id="ageDiv"></div>
+</body>
+</html>
+<script>
+    age = 20;
+    var numberOfKids = 2 * age * "stupid";
+    document.getElementById("ageDiv").innerHTML="I want " +numberOfKids + " kids!";
+</script>

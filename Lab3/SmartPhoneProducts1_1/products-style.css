@@ -81,7 +81,7 @@ div {
     width:200px;
     height: 200px;
 }
-
+ 
 .rotate img
 {
   animation: rotation .3s infinite linear;
