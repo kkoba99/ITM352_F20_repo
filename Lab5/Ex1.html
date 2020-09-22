@@ -25,8 +25,10 @@
         var str = new String ("Dean-Kobatake");
         document.write(str.fontsize(10)) + "<br>";
 
-        var number = 20.00 * 0.0413; 
-        number.toFixed(number);
+        var bill = 20.00; 
+        var tax = bill * .0413;
+        var taxdec = tax.toFixed(2);
+        document.write ("<br>" + "The tax on" + " " + firstName + "'s bill is" + " " + taxdec);
        
     </script>
     <div id="ageDiv"></div>
@@ -35,5 +37,5 @@
 <script>
     age = 20;
     var numberOfKids = 2 * age * "stupid";
-    document.getElementById("ageDiv").innerHTML="I want " +numberOfKids + " kids!";
+    document.getElementById("ageDiv").innerHTML=" <br>" + "I want " +numberOfKids + " kids!";
 </script>
