@@ -1,0 +1,75 @@
+<script>
+/*This is a sales receipt*/
+
+// Product data
+var item1 = 'Demon Slayer Shirt';
+     var quantity1 = 1;
+     var price1 = 14.99;
+var item2 = 'Eucalyptus Essential Oil';
+     var quantity2 = 2;
+     var price2 = 7.99;
+var item3 = 'Honoka Essential Oil';
+     var quantity3 = 2;
+     var price3 = 7.99;
+var item4 = 'Evangelion Shirt';
+     var quantity4 = 1;
+     var price4 = 8.99; 
+
+// Compute extended prices 
+var extended_price1 = price1 * quantity1;
+var extended_price2 = price2 * quantity2;
+var extended_price3 = price3 * quantity3;
+var extended_price4 = price4 * quantity4;
+
+// Subtotal
+var subtotal = extended_price1 + extended_price2 + extended_price3 + extended_price4;
+
+// Tax Amount @ 5.75
+var tax = subtotal * 0.0575;
+
+// Total
+var total = subtotal + tax;
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1px">
+        <th>Item</th><th>Quantity</th><th>Price</th><th>Extended Price</th>
+
+            <script>
+                var table_str=
+            `<tr><td>${item1}</td><td>${quantity1}</td><td>${price1}</td><td>${extended_price1}</td></tr>
+            <tr><td>${item2}</td><td>${quantity2}</td><td>${price2}</td><td>${extended_price2}</td></tr>
+            <tr><td>${item3}</td><td>${quantity3}</td><td>${price3}</td><td>${extended_price3}</td></tr>
+            <tr><td>${item4}</td><td>${quantity4}</td><td>${price4}</td><td>${extended_price4}</td></tr>`;
+           document.write(table_str);
+        </script>
+
+        <script>
+            var subtotal_str=
+            `<tr><td>${"Subtotal"}</td><td>${ "$" +subtotal.toFixed(2)}</td></tr>`;
+            document.write(subtotal_str);
+        </script>
+
+        <script>
+             var tax_str=
+            `<tr><td>${"Tax @ 5.75%"}</td><td>${ "$" +tax.toFixed(2)}</td></tr>`;
+            document.write(tax_str);
+        </script>
+
+        <script>
+            var total_str=
+            `<tr><td><b>${"Total"}</b></td><td><b>${ "$" +total.toFixed(2)}</b></td></tr>`;
+            document.write(total_str);
+
+        </script>
+    </table>
+</body>
+</html>
