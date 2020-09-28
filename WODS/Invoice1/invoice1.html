@@ -1,0 +1,88 @@
+<script>
+/* This is a sales receipt*/
+
+// Product Data
+// Product 1
+     var item1 = 'Demon Slayer Shirt';
+     var quantity1 = 2;
+     var price1 = 14.99;
+// Product 2
+     var item2 = 'Evangelion Shirt';
+     var quantity2 = 1;
+     var price2 = 8.23;
+// Product 3
+     var item3 = 'Starbucks Cups';
+     var quantity3 = 2;
+     var price3 = 5.23;
+// Product 4
+     var item4 = 'Hamburger';
+     var quantity4 = 5;
+     var price4 = 9.99;
+// Product 5
+     var item5 = 'Hand Sanitizer';
+     var quantity5 = 1;
+     var price5 = 10.23;
+
+    // Compute extended prices
+    var extended_price1 = quantity1 * price1
+    var extended_price2 = quantity2 * price2
+    var extended_price3 = quantity3 * price3
+    var extended_price4 = quantity4 * price4
+    var extended_price5 = quantity5 * price5
+
+    // Subtotal
+    var subtotal = extended_price1 + extended_price2 + extended_price3 + extended_price4 + extended_price5
+
+    // Tax @ 5.75%
+    var tax = subtotal * 0.0575
+
+    // Total
+    var total = tax + subtotal
+
+    </script>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sales Receipt</title>
+    </head>
+    <body>
+        <table border="1">
+            <th>Item</th><th>Quantity</th><th>Price</th><th>Extended Price</th>
+
+            <script>
+                //Products 
+                var table_str = 
+                `<tr><td>${item1}</td><td>${quantity1}</td><td>${price1}</td><td>${extended_price1}</td></tr>
+                <tr><td>${item2}</td><td>${quantity2}</td><td>${price2}</td><td>${extended_price2}</td></tr>
+                <tr><td>${item3}</td><td>${quantity3}</td><td>${price3}</td><td>${extended_price3}</td></tr>
+                <tr><td>${item4}</td><td>${quantity4}</td><td>${price4}</td><td>${extended_price4}</td></tr>
+                <tr><td>${item5}</td><td>${quantity5}</td><td>${price5}</td><td>${extended_price5}</td></tr>`;
+                document.write(table_str);
+            </script>
+
+            <script>
+                //Subtotal
+                var subtotal_str =
+                `<tr><td colspan="3">Subtotal</td><td>${subtotal.toFixed(2)}</td></tr>`;
+                document.write(subtotal_str);
+            </script>
+
+            <script>
+                //Tax
+                 var tax_str =
+                `<tr><td colspan="3">Tax</td><td>${tax.toFixed(2)}</td></tr>`;
+                document.write(tax_str);
+            </script>
+
+            <script>
+                //Total
+                var total_str =
+                 `<tr><td colspan="3"><b>Total<b></td><td><b>${total.toFixed(2)}<b></td></tr>`;
+                 document.write(total_str);
+            </script>
+        </table>
+    </body>
+    </html>
