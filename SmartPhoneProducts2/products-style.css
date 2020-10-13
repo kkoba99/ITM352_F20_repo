@@ -48,7 +48,7 @@ main {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    background-image: url("../SmartPhoneProducts2/images/phone_globe.jpg");
+    background-image: url("../SmartPhoneProducts1/images/phone_globe.jpg");
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 20px;
@@ -71,7 +71,7 @@ div {
     margin-right: 10px;
     margin-left: 10px;
     background-color:black;
-    background-image: url("../SmartPhoneProducts2/images/5c6c190174c5871aab3e0547.jpg");
+    background-image: url("../SmartPhoneProducts1/images/5c6c190174c5871aab3e0547.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
