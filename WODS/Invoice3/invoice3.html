@@ -23,9 +23,10 @@
      var quantity5 = 1;
      var price5 = 10.23;
 
-//Initialize subtotal to 0
-var subtotal = 0;
-</script>
+//Initialize Subtotal to 0
+    var subtotal = 0;
+
+    </script>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -39,74 +40,53 @@ var subtotal = 0;
             <th>Item</th><th>Quantity</th><th>Price</th><th>Extended Price</th>
 
             <script>
-                //Compute Extended Price
-                var extended_price = quantity1*price1;                  
-                //Running Total
-                subtotal = subtotal + extended_price; 
                 
-                //Products 
+                var extended_price = price1 * quantity1;
+                var subtotal = extended_price + subtotal;
                 var item1_str = 
-                `<tr><td>${item1}</td><td>${quantity1}</td><td>${price1}</td></tr>`;
+                `<tr><td>${item1}</td><td>${quantity1}</td><td>${price1}</td><td>${extended_price}</td></tr>`;
                 document.write(item1_str);
-                
 
-
-
-
-
-                
-                //Compute Extended Price
-                var extended_price = quantity2*price2;                    
-                //Running Total
-                subtotal = subtotal + extended_price; 
-
+                extended_price = price2 * quantity2;
+                subtotal = extended_price + subtotal;
                 var item2_str = 
-                `<tr><td>${item2}</td><td>${quantity2}</td><td>${price2}</td></tr>`;
+                `<tr><td>${item2}</td><td>${quantity2}</td><td>${price2}</td><td>${extended_price}</td></tr>`;
                 document.write(item2_str);
 
-                //Compute Extended Price
-                var extended_price = quantity3*price3;                    
-                //Running Total
-                subtotal = subtotal + extended_price; 
-
+                extended_price = price3 * quantity3;
+                subtotal = extended_price + subtotal;
                 var item3_str =
-                `<tr><td>${item3}</td><td>${quantity3}</td><td>${price3}</td></tr>`;
+                `<tr><td>${item3}</td><td>${quantity3}</td><td>${price3}</td><td>${extended_price}</td></tr>`;
                 document.write(item3_str);
 
-                //Compute Extended Price
-                var extended_price = quantity4*price4;                    
-                //Running Total
-                subtotal = subtotal + extended_price; 
-
+                extended_price = price4 * quantity4;
+                subtotal = extended_price + subtotal;
                 var item4_str = 
-                `<tr><td>${item4}</td><td>${quantity4}</td><td>${price4}</td></tr>`;
-                document.write(item4_str);
+               ` <tr><td>${item4}</td><td>${quantity4}</td><td>${price4}</td><td>${extended_price}</td></tr>`;
+               document.write(item4_str);
 
-                //Compute Extended Price
-                var extended_price = quantity5*price5;                    
-                //Running Total
-                subtotal = subtotal + extended_price; 
-
-                var item5_str = 
-                `<tr><td>${item5}</td><td>${quantity5}</td><td>${price5}</td></tr>`;
+               extended_price = price5 * quantity5;
+                subtotal = extended_price + subtotal;
+               var item5_str = 
+                `<tr><td>${item5}</td><td>${quantity5}</td><td>${price5}</td><td>${extended_price}</td></tr>`;
                 document.write(item5_str);
             </script>
 
             <script>
-            // Tax @ 5.75%
+                // Tax @ 5.75%
                 var tax = subtotal * 0.0575
 
             // Shipping
-                if(subtotal<50.00) {
-                      shipping = 2.00;
-                } else if (subtotal<=99.99) {
-                        shipping = 5.00
-                } else {
-                     shipping = 0.05*subtotal; //Subtotals over $100 will be charged 5% of the subtotal amount
-                }
+            if(subtotal<50.00) {
+            shipping = 2.00;
+            } else if (subtotal<=99.99) {
+            shipping = 5.00
+            } else {
+              shipping = 0.05*subtotal; //Subtotals over $100 will be charged 5% of the subtotal amount
+            }
 
-            // Total
-                var total = tax + subtotal
+           // Total
+            var total = tax + subtotal
             </script>
 
             <script>
