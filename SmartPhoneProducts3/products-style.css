@@ -1,0 +1,84 @@
+/* General */  
+body {
+    width: 800px;
+    margin: 0 auto; 
+    color:black;
+    background-color: whitesmoke;
+}
+/* Typography */  
+h1 {
+    text-align: center;
+    border: 2px solid black;
+    background-color: rgb(212, 227, 255);
+    border-radius: 25px;
+    font-family: 'Kanit', Semi-bold; 
+}
+
+h2 { 
+    text-align: center;
+    border: 2px solid black;
+    background-color: rgb(212, 227, 255);
+    font-family:"Kanit";
+    font-size: medium;
+}
+
+footer {
+    font-size: 10px;
+    text-align: center;
+}
+
+p {
+    border: 2px solid black;
+    background-color: white;
+    text-align: center;
+    font-family:"Kanit";
+}
+/* block styling */  
+
+/* Form styling */  
+
+/* Styling the products display */ 
+ img {
+    width: 200px;
+    height: 200px;
+    border: 2px solid black
+}
+
+main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    background-image: url("images/phone_globe.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+}
+
+div {
+    border: 5px solid black;
+    display: flex;
+    border-radius: 27px;
+}
+
+.footer {
+    font-size: 20px;
+}
+
+#navbar {
+    float: left;
+    height: 617px;
+    width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color:black;
+    background-image: url("images/5c6c190174c5871aab3e0547.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+
+
+
+
+
