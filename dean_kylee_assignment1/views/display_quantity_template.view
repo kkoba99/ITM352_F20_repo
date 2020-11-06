@@ -1,0 +1,1 @@
+<h2>Thank you for purchasing ${q} ${item}. Your total is \$${q * item_price}!</h2>

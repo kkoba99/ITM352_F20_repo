@@ -1,0 +1,93 @@
+<script>
+//Product information listed below in "var products"
+var products = 
+[
+    {
+        "item":"Heart Shirt",
+        "price": 19.99,
+        "image":"heart_1.PNG"
+    },
+    {
+        "item":"Heart Purse",
+        "price": 34.99,
+        "image":"heart_2.PNG"
+    },
+    {
+        "item":"Heart Shaped Purse",
+        "price": 39.99,
+        "image":"heart_3.PNG"
+    },
+    {
+        "item":"Heart Wallet,",
+        "price": 24.99,
+        "image":"heart_4.PNG"
+    },
+    {
+        "item":"Heart Sweatshirt",
+        "price": 29.99,
+        "image":"heart_5.PNG"
+    },
+    {
+        "item":"Heart Mugs",
+        "price": 14.99,
+        "image":"heart_6.jpg"
+    }
+];
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/Lab13/public/products-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&effect=neon|Open Sans">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Depot</title>
+</head>
+
+<! -- Below attaches the invoice.html file to the products_display.html -->
+<form action="./process_form" method="POST">
+
+<body>
+
+    <h1>Heart Depot</h1>
+
+<div>
+        
+    <main>
+    
+        <script>
+        //This "for loop" generates the product's name, price, image, and quantity input on the products_display page
+            for(i = 0; i < products.length; i++) {
+                document.write(
+                `<section class="item">
+                <h2>${products[i].item}</h2>
+                <p>${products[i].price}</p>
+                <img src= "./images/${products[i].image}">
+                <br>
+                <br>
+                <label>Quantity</label>
+                <input type="text" placeholder="0" name="quantity${i}">
+                <br>
+                <br>
+                </section>`
+                );
+            }
+        </script>
+
+    </main>
+
+</div>
+
+<! -- Below inputs the "Purchase" button -->
+<br>
+<input type="submit" value="Purchase" style="font-family: Kanit; background-color: darkred; color: white;">
+
+</form>
+
+<footer>
+    <h1 class="footer">Shop to your Heart's Content</h1>
+</footer>
+
+</body>
+</html>
