@@ -1,0 +1,144 @@
+<! -- Assignment 1, Kylee Dean-Kobatake -->
+<! -- Original invoice, still a work in progress. Do not mind this. -->
+
+<script>
+function generate_item_rows(product_quantities_array) {
+        for (i=0; i<product_quantities_array.length; i++) {
+            qty = product_quantities_array[i];
+            errs = isNonNegIntString(qty, true);
+            if(qty == 0) {
+                continue;
+            }
+            if(errs.length == 0) {
+                extended_price = qty * products[i].price;
+                subtotal = extended_price + subtotal;
+            } else {
+                qty = `<span style="color:red;">${qty}<br>${errs.join("<br>")}</span>`;
+            }
+                document.write(
+                `<tr><td>${products[i].item}</td><td>${qty}</td><td>${products[i].price}</td><td>${extended_price}</td></tr>`);
+}
+}
+
+function isNonNegIntString (string_to_check, returnErrors=false) {
+    errors = []; // This assumes no errors at first
+        if(Number(string_to_check) != string_to_check) errors.push('Not a number!'); // This checks if the quantity inputted is not a number
+        if(string_to_check < 0) errors.push('Negative value!'); // This checks if the quantity inputted is a negative number
+        if(parseInt(string_to_check) != string_to_check) errors.push('Not an integer!'); // This checks if the quanity inputted is an non-integer
+    
+   return returnErrors ? errors : (errors.length == 0);
+}
+
+//Product information listed below in "var products"
+var products =
+[
+    {
+        "item":"Heart Shirt",
+        "price": 19.99,
+        "image":"heart_1.PNG"
+    },
+
+    {
+        "item":"Heart Purse",
+        "price": 34.99,
+        "image":"heart_2.PNG"
+    },
+    
+    {
+        "item":"Heart Shaped Purse",
+        "price": 39.99,
+        "image":"heart_3.PNG"
+    },
+
+    {
+        "item":"Heart Wallet",
+        "price": 24.99,
+        "image":"heart_4.PNG"
+    },
+
+    {
+        "item":"Heart Sweatshirt",
+        "price": 29.99,
+        "image":"heart_5.PNG"
+    },
+
+    {
+        "item":"Heart Mugs",
+        "price": 14.99,
+        "image":"heart_6.jpg"
+    }
+];
+
+//This is the quantities array that holds the quantities selected by the customer
+var quantities = [1,1,0,1,1,1];
+
+//Initialize Subtotal to 0
+    var subtotal = 0;
+
+    </script>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heart Depot Receipt</title>
+    </head>
+    <body>
+        <table border="1">
+            <th>Item</th><th>Quantity</th><th>Price</th><th>Extended Price</th>
+        
+            <script>
+            //This generates the table with product names, quantities, prices, and extended prices rows
+                generate_item_rows(quantities);
+            </script>
+
+            <script>
+            //Below are calculations for the tax, shipping, and total
+            // Tax formula @ 5.75%
+            var tax = subtotal * 0.0575
+
+            // Shipping formula
+            if(subtotal<50.00) {
+            shipping = 2.00;
+            } else if (subtotal<=99.99) {
+            shipping = 5.00
+            } else {
+              shipping = 0.05*subtotal; //Subtotals over $100 will be charged 5% of the subtotal amount
+            }
+
+           // Total formula
+            var total = tax + subtotal
+            </script>
+
+            <! --Below generates the table with the subtotal, tax, shipping, and total rows-->
+            <script>
+                //Subtotal
+                var subtotal_str =
+                `<tr><td colspan="3">Subtotal</td><td>${subtotal.toFixed(2)}</td></tr>`;
+                document.write(subtotal_str);
+            </script>
+
+            <script>
+                //Tax
+                 var tax_str =
+                `<tr><td colspan="3">Tax</td><td>${tax.toFixed(2)}</td></tr>`;
+                document.write(tax_str);
+            </script>
+
+            <script>
+            //Shipping
+                  var ship_str =
+                `<tr><td colspan="3">Shipping</td><td>${shipping.toFixed(2)}</td></tr>`;
+                document.write(ship_str);
+            </script>
+
+            <script>
+                //Total
+                var total_str =
+                 `<tr><td colspan="3"><b>Total<b></td><td><b>${total.toFixed(2)}<b></td></tr>`;
+                 document.write(total_str);
+            </script>
+        </table>
+    </body>
+    </html>
