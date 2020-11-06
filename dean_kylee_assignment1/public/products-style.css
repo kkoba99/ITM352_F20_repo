@@ -1,3 +1,5 @@
+/*Original stylesheet for products_display.html,  work in progress*/
+
 /* General */  
 body {
     width: 800px;
@@ -33,9 +35,6 @@ p {
     text-align: center;
     font-family:"Kanit";
 }
-/* block styling */  
-
-/* Form styling */  
 
 /* Styling the products display */ 
  img {

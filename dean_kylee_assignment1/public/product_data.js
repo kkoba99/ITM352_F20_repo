@@ -1,3 +1,6 @@
+//Asignment 1, Kylee Dean-Kobatake
+//Products data page
+
 products = 
 [
   {

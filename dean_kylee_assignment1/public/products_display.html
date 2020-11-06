@@ -1,3 +1,6 @@
+<! -- Assignment 1, Kylee Dean-Kobatake -->
+<! -- Products Display Page -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,9 +18,8 @@
     <h1>Heart Depot</h1>
 
     <script>
+        //Originally from lab12, this function checks for invalid data quantities
         function isNonNegIntString (string_to_check, returnErrors=false) {
-            /*This fucntion return true if string_to_check is a non negative integer.
-            If returnerror is true it will reutnr the array of reasons it is not a non-negative integer*/
             errors = []; // assume no errors at first
             if(Number(string_to_check) != string_to_check) {errors.push('Not a number!');} // Check if string is a number value
             if(string_to_check < 0) errors.push('Negative value!'); // Check if it is non-negative
@@ -26,21 +28,22 @@
             return returnErrors ? errors : (errors.length == 0);
         }
 
-
+        //This function checks the value of the quantity textbox and deploys the function isNonNegIntString if there's errors
         function checkQuantityTextbox(theTextbox) {
-            errs = isNonNegInt(theTextbox.value, true);
+            errs = isNonNegIntString(theTextbox.value, true);
             document.getElementById(theTextbox.name + '_message').innerHTML = errs.join(", ");
         }
 
 
         function displayPurchase() {
             userInput = quantity_textbox.value;
-            if (isNonNegInt(userInput)) {
+            if (isNonNegIntString(userInput)) {
                 document.write(`Thank you for purchasing ${userInput} things!`);
             }
         }
     </script>
     
+    <! -- The code below was extracted from Lab13, order_page_ex4.html with slight modifications -->
     <form name='quantity_form' action="http://localhost:8080/process_form" method="POST">
         <script>
             for (i in products) {

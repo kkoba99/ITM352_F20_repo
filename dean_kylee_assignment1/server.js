@@ -1,3 +1,6 @@
+//Assignment 1, Kylee Dean-Kobatake
+//Below is code extracted from Lab13, excercise 4 with slight modifications
+
 var express = require('express');
 var app = express();
 var myParser = require("body-parser");
@@ -5,9 +8,10 @@ var data = require('./public/product_data.js');
 var products = data.products;
 var fs = require('fs');
 
-app.use(express.static('./public')); ///creates a middleware
+app.use(express.static('./public')); 
 app.use(myParser.urlencoded({ extended: true }));
-  
+ 
+//I believe this function formulates the quantity information inputted by the customer and delivers it to the invoice(?)
 function process_quantity_form (POST, response) {
         if (typeof POST['purchase_submit_button'] != 'undefined') {
            var contents = fs.readFileSync('./views/display_quantity_template.view', 'utf8');
@@ -27,7 +31,7 @@ function process_quantity_form (POST, response) {
         }
      }
 
-
+//Originally from Lab12, this functions checks for invalid data quantities
 function isNonNegIntString (string_to_check, returnErrors=false){
     errors = []; // assume no errors at first
     if(Number(string_to_check) != string_to_check) {errors.push('Not a number!');} // Check if string is a number value
@@ -48,4 +52,4 @@ app.post("/process_form", function (request, response) {
 });
 
 
-app.listen(8080, () => console.log(`listening on port 8080`)); // note the use of an anonymous function here
+app.listen(8080, () => console.log(`listening on port 8080`)); 
