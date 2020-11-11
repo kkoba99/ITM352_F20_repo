@@ -28,13 +28,13 @@
             return returnErrors ? errors : (errors.length == 0);
         }
 
-        //This function checks the value of the quantity textbox and deploys the function isNonNegIntString if there's errors
+        //From Lab12 ex.3, I think this function checks the value of the quantity textbox and deploys the function isNonNegIntString if there's errors
         function checkQuantityTextbox(theTextbox) {
             errs = isNonNegIntString(theTextbox.value, true);
             document.getElementById(theTextbox.name + '_message').innerHTML = errs.join(", ");
         }
 
-
+        // From Lab12 ex.3, zombie code(?)
         function displayPurchase() {
             userInput = quantity_textbox.value;
             if (isNonNegIntString(userInput)) {
