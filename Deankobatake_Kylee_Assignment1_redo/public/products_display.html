@@ -1,0 +1,97 @@
+<! -- Assignment 1, Kylee Dean-Kobatake -->
+<! -- Products Display Page -->
+
+<script src="./product_data.js" type="text/javascript">//Links product data to the display page</script>
+
+<script>
+    //Function below is from ITM352 Lab12, checks if quantities entered are a number,non-negative, and an integer
+        function isNonNegIntString (string_to_check, returnErrors=false){
+            errors = []; // assume no errors at first
+            if(Number(string_to_check) != string_to_check) {errors.push('Not a number!');} // Check if string is a number value
+            if(string_to_check < 0) errors.push('Negative value!'); // Check if it is non-negative
+            if(parseInt(string_to_check) != string_to_check) errors.push('Not an integer!'); // Check that it is an integer
+            
+            return returnErrors ? errors : (errors.length == 0);
+        }
+    //Function below is from ITM352 Lab12, checks the value of the quantity textbox and deploys a warning if there's invalid quantities
+        function checkQuantityTextbox(theTextbox) {
+            errs = isNonNegIntString(theTextbox.value, true);
+            document.getElementById(theTextbox.name + '_message').innerHTML = errs.join(", ");
+        }
+
+    //Code below is referenced from Justina Bui in ITM352
+        window.onload = function () {
+            let params = (new URL(document.location)).searchParams; 
+            if (params.has('submitPurchase')) {
+                has_errors = false; 
+                total_qty = 0; 
+                
+                for (i = 0; i < products.length; i++) {
+                    if (params.has(`quantity${i}`)) {
+                        a_qty = params.get(`quantity${i}`);
+                        product_form[`quantity${i}`].value = a_qty;
+                        total_qty += a_qty;
+                        if (!isNonNegInt(a_qty)) {
+                            has_errors = true; 
+                            checkQuantityTextbox(product_form[`quantity${i}`]);  
+                        }
+                    }
+                }
+                
+                if (has_errors) {
+                    alert("Please enter only valid quantities!");
+                } else if (total_qty == 0) {
+                    alert("Please select some quantities!");
+                } else {
+                    window.location = `./invoice.html${document.location.search}`;
+                    window.stop;
+                }
+            }
+        }
+        //Code above is referenced from Justina Bui in ITM352
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Depot</title>
+    <link href="./products-style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&effect=neon|Open Sans">
+</head>
+<body>
+    <form name="quantity_form" action="./invoice.html" method="GET">
+        <header>
+            <h1>Heart Depot</h1>
+        </header>
+        <div>
+            <main>
+                <script>
+                    //Code below is modified and referenced from the display page from SmartPhoneProducts3 WOD & order_page from Lab13
+                    //The for loop generates the products on the display page
+                    for (i = 0; i < products.length; i++) {
+                        document.write(`
+                                <section class="item">
+                                    <h2>${products[i].item}</h2>
+                                     <p>${products[i].price}</p>
+                                     <img src= "./images/${products[i].image}" >
+                                    <br>    
+                                    <br>
+                                    <label id="quantity${i}_label"}">Quantity</label>
+                                    <input type="text" placeholder="0" name="quantity${i}" 
+                                    onkeyup="checkQuantityTextbox(this);">
+                                    <br>
+                                    <br>
+                                </section>
+                            `);
+                    }      
+                </script>
+            </main>
+        </div>
+        <br>
+        <input type="submit" value="Purchase" name="submitPurchase" style="font-family: Kanit; background-color: darkred; color: white">
+    </form>
+</body>
+</html>

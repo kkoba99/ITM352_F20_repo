@@ -1,0 +1,99 @@
+<script src="./product_data.js"></script>
+
+<script>
+let params = (new URL(document.location)).searchParams;
+  var quantities = [];
+  // form was submitted so process the invoice
+  if (params.has('purchase_submit_button')) {
+    for (i = 0; i < products.length; i++) {
+      if (params.has(`quantity${i}`)) {
+        a_qty = params.get(`quantity${i}`);
+        quantities[i] = a_qty;
+      }
+    }
+  } else {
+    document.write('No quantity entered');
+  }
+  console.log(quantities);
+</script>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heart Depot Receipt</title>
+    </head>
+    <body>
+        <table border="1">
+            <th>Item</th><th>Quantity</th><th>Price</th><th>Extended Price</th>
+        
+            <script>
+            function generate_item_rows(products) {
+            for (i=0; i<products.length; i++) {
+            qty = products[i];
+            errs = isNonNegIntString(qty, true);
+            if(qty == 0) {
+                continue;
+            }
+            if(errs.length == 0) {
+                extended_price = qty * products[i].price;
+                subtotal = extended_price + subtotal;
+            } else {
+                qty = `<span style="color:red;">${qty}<br>${errs.join("<br>")}</span>`;
+            }
+                document.write(
+                `<tr><td>${products[i].item}</td><td>${qty}</td><td>${products[i].price}</td><td>${extended_price}</td></tr>`);
+            }};
+            </script>
+
+            <script>
+                subtotal = 0;
+            //Below are calculations for the tax, shipping, and total
+            // Tax formula @ 5.75%
+            var tax = subtotal * 0.0575
+
+            // Shipping formula
+            if(subtotal<50.00) {
+            shipping = 2.00;
+            } else if (subtotal<=99.99) {
+            shipping = 5.00
+            } else {
+              shipping = 0.05*subtotal; //Subtotals over $100 will be charged 5% of the subtotal amount
+            }
+
+           // Total formula
+            var total = tax + subtotal
+            </script>
+
+            <! --Below generates the table with the subtotal, tax, shipping, and total rows-->
+            <script>
+            //Subtotal
+                var subtotal_str =
+                `<tr><td colspan="3">Subtotal</td><td>${subtotal.toFixed(2)}</td></tr>`;
+                document.write(subtotal_str);
+            </script>
+
+            <script>
+            //Tax
+                 var tax_str =
+                `<tr><td colspan="3">Tax</td><td>${tax.toFixed(2)}</td></tr>`;
+                document.write(tax_str);
+            </script>
+
+            <script>
+            //Shipping
+                  var ship_str =
+                `<tr><td colspan="3">Shipping</td><td>${shipping.toFixed(2)}</td></tr>`;
+                document.write(ship_str);
+            </script>
+
+            <script>
+                //Total
+                var total_str =
+                 `<tr><td colspan="3"><b>Total<b></td><td><b>${total.toFixed(2)}<b></td></tr>`;
+                 document.write(total_str);
+            </script>
+        </table>
+    </body>
+    </html>
