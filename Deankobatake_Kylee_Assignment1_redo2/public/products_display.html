@@ -1,0 +1,73 @@
+<! -- Assignment 1, Kylee Dean-Kobatake -->
+    <! -- Products Display Page -->
+
+        <script src="./product_data.js"
+            type="text/javascript">//Supplies product_data.js data to the display page</script>
+
+        <script>
+            //Modified from ITM352 Lab12, checks for invalid quantities
+            function isNonNegIntString(string_to_check, returnErrors = false) {
+                errors = []; // assume no errors at first
+                if (Number(string_to_check) != string_to_check) { errors.push('<font color = "red">Not a number!</font color = "red">'); } // Check if quantity is a number
+                else { //If it is a number, move on to do other checks
+                    if (string_to_check < 0) { errors.push('<font color = "red">Negative value!</font color = "red">'); } // Check if quantity is a non-negative
+                    if (parseInt(string_to_check) != string_to_check) { errors.push('<font color = "red">Not an integer!</font color = "red">'); } // Check if quantity is a non-integer
+                }
+                return returnErrors ? errors : (errors.length == 0); // If no errors, do not show "invalid quantity" text 
+            }
+
+            //Modified from ITM352 Lab12, shows errors next to quantity textbox if there are invalid quantities entered
+            function checkQuantityTextbox(theTextbox) {
+                errs = isNonNegIntString(theTextbox.value, true);
+                if (errs.length == 0) errs = ['You want:']; //If there's no errors, replace "Quantity" with "You want:" text
+                if (theTextbox.value.trim() == '') errs = ['Quantity'];
+                document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(" "); // Show errors if there's invalid quantities 
+            }
+
+        </script>
+
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Heart Depot</title>
+            <link href="./products-style.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&effect=neon|Open Sans">
+        </head>
+
+        <body>
+            <form name="quantity_form" action="./process_quantities" method="POST">
+                <header>
+                    <h1>Heart Depot</h1>
+                </header>
+                <div>
+                    <main>
+                        <script>
+                            //For loop that generates the products on the display page
+                            for (i = 0; i < products.length; i++) {
+                                document.write(`
+                                <section class="item">
+                                    <h2>${products[i].item}</h2>
+                                     <p>${products[i].price}</p>
+                                     <img src= "./images/${products[i].image}" >
+                                    <br>    
+                                    <br>
+                                    <label id="quantity${i}_label"}">Quantity</label>
+                                    <input type="text" placeholder="0" name="quantity${i}" 
+                                    onkeyup="checkQuantityTextbox(this);">
+                                    <br>
+                                    <br>
+                                </section>
+                            `);
+                            }      
+                        </script>
+                    </main>
+                </div>
+                <br>
+                <input type="submit" value="Purchase" name="submitPurchase" style="font-family: Kanit; background-color: #580d05; color: white; font-size: 40px; border-color: #2b0602;
+                border-width: 6px;">
+            </form>
+        </body>
+        </html>
