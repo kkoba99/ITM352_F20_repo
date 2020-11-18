@@ -1,0 +1,116 @@
+<! -- Assignment 1, Kylee Dean-Kobatake -->
+<! -- Invoice Page -->
+<! -- Referenced from Justina Bui in ITM352 and Invoice4 WOD-->
+
+<script src="./product_data.js" type="text/javascript">//Links product data to the invoice</script>
+
+<script>
+   //Code below is referenced from Justina Bui in ITM352
+    let params = (new URL(document.location)).searchParams; 
+    var quantities = []; 
+    if (params.has('submitPurchase')) { 
+        for (i = 0; i < products.length; i++) {
+            if (params.has(`quantity${i}`)) {
+                a_qty = params.get(`quantity${i}`);
+                quantities[i] = a_qty;
+            }
+            else {
+                document.write('No Form Submitted. Please Complete Purchase!')
+            }
+            console.log(quantities); 
+        }
+    }
+    //Code above is referenced from Justina Bui in ITM352
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./invoice-style.css" rel="stylesheet">
+    <title>Heart Depot Invoice</title>
+
+</head>
+
+<body>
+        <table border="1">
+            <tbody>
+
+                <tr><th>Item</th><th>Quantity</th><th>Price</th><th>Extended Price</th></tr>
+
+                <script>
+                    //Code below is referenced from Justina Bui's invoice in ITM352
+                    //Generates the invoice table rows for the products selected from the display page
+                    subtotal = 0;
+                    for (i = 0; i < products.length; i++) {
+                        if (quantities[i] > 0) {
+                            extended_price = quantities[i] * products[i].price;
+                        subtotal = extended_price + subtotal;
+                        document.write(`
+                        <tr>
+                        <td>${products[i].item}</td>
+                        <td>${quantities[i]}</td>
+                        <td>${products[i].price}</td>
+                        <td>${extended_price.toFixed(2)}</td>
+                        </tr>
+                        `);
+                    }
+                    }
+                    //Code above is referenced from Justina Bui's invoice in ITM352
+
+                    //Code below is from Invoice4 WOD
+                    // Tax formula
+                    var tax = subtotal * 0.0575 
+
+                    // Shipping formula
+                    if(subtotal<50.00) {
+                    shipping = 2.00;
+                    } else if (subtotal<=99.99) {
+                    shipping = 5.00
+                    } else {
+                    shipping = 0.05*subtotal; //Subtotals over $100 will be charged 5% of the subtotal amount
+                    }
+                    // Total formula
+                    var total = tax + subtotal 
+                </script>
+
+                <tr>
+                    <script>
+                        //Generates the subtotal table row
+                        var subtotal_str =
+                            `<tr><td colspan="3">Subtotal</td><td>${subtotal.toFixed(2)}</td></tr>`;
+                            document.write(subtotal_str);
+                    </script>
+                </tr>
+
+                <tr>
+                    <script> 
+                        //Generates the tax table row
+                        var tax_str =
+                            `<tr><td colspan="3">Tax</td><td>${tax.toFixed(2)}</td></tr>`;
+                            document.write(tax_str);
+                    </script>
+                </tr>
+
+                <tr>
+                    <script>
+                        //Generates the shipping table row
+                        var ship_str =
+                            `<tr><td colspan="3">Shipping</td><td>${shipping.toFixed(2)}</td></tr>`;
+                            document.write(ship_str);
+                    </script>
+                </tr>
+
+                <tr>
+                    <script>
+                        //Generates the total table row
+                        var total_str =
+                             `<tr><td colspan="3"><b>Total<b></td><td><b>${total.toFixed(2)}<b></td></tr>`;
+                            document.write(total_str);
+                    </script>
+                </tr>
+            </tbody>
+        </table>
+</body>
+</html>

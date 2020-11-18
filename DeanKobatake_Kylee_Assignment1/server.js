@@ -9,10 +9,19 @@ var products = data.products;
 var fs = require('fs');
 
 // From Lab13, excercise 4
-app.use(express.static('./public')); 
+app.all('*', function (request, response, next) {
+    console.log(request.method + ' to ' + request.path);
+    next();
+});
+
 app.use(myParser.urlencoded({ extended: true }));
  
-//I think this function from Lab13 takes the quantity information inputted by the customer and delivers it to the invoice(?). 
+// From Lab13, excercise 4
+app.post("/process_form", function (request, response) {
+    let POST = request.body;
+    process_quantity_form(POST, response);
+
+
 function process_quantity_form (POST, response) {
         if (typeof POST['purchase_submit_button'] != 'undefined') {
            var contents = fs.readFileSync('./views/display_quantity_template.view', 'utf8');
@@ -31,6 +40,7 @@ function process_quantity_form (POST, response) {
           response.end();
         }
      }
+});
 
 //Originally from Lab12, this functions checks for invalid data quantities
 function isNonNegIntString (string_to_check, returnErrors=false){
@@ -43,16 +53,6 @@ function isNonNegIntString (string_to_check, returnErrors=false){
 }
 
 // From Lab13, excercise 4
-app.all('*', function (request, response, next) {
-    console.log(request.method + ' to ' + request.path);
-    next();
-});
-
-// From Lab13, excercise 4
-app.post("/process_form", function (request, response) {
-    let POST = request.body;
-    process_quantity_form(POST, response);
-});
-
+app.use(express.static('./public')); 
 // From Lab13, excercise 4
 app.listen(8080, () => console.log(`listening on port 8080`)); 
