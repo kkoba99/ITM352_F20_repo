@@ -1,0 +1,90 @@
+/*Original stylesheet for products_display.html
+
+/* General */  
+body {
+    width: 1000px;
+    margin: 10 auto; 
+    background-color: white;
+    background-image: url(./images/background.png);
+}
+/* Typography */  
+h1 {
+    text-align: center;
+    background-color: pink;
+    font-family: 'Kanit', Semi-bold; 
+}
+
+h2 { 
+    text-align: center;
+    border: 2px solid black;
+    background-color: pink;
+    font-family:"Kanit";
+    font-size: 20px;
+}
+
+footer {
+    font-size: 10px;
+    text-align: center;
+}
+
+p {
+    border: 2px solid black;
+    background-color: white;
+    text-align: center;
+    font-family:"Kanit";
+}
+
+/* Styling the products display */ 
+ img {
+    width: 400px;
+    height: 400px;
+    padding-left: 15px;
+    
+}
+
+main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    background-image: url("");
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+    background-color: white;
+    padding-left: 40px;
+}
+
+div {
+    border: 0px solid black;
+    display: flex;
+    border-radius: 27px;
+}
+
+.footer {
+    font-size: 20px;
+}
+
+label {
+    font-family:"Kanit";
+    color:black;
+}
+
+input.submit {
+    content: center;
+    width: 100px;
+    margin: 0 auto;
+    font-size: 30px;
+}
+
+form {
+    text-align:center;
+}
+
+
+
+
+
+
+
+
+

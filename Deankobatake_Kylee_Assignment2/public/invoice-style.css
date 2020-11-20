@@ -1,0 +1,69 @@
+body {
+    width: 1000px;
+    margin: 10 auto; 
+    background-color: white;
+    background-image: url(./images/background.png);
+}
+
+table {
+    font-family: 'Kanit';
+    border-collapse: collapse;
+    width: 700px;
+
+}
+
+td {
+    font-family: 'Kanit';
+    background-color: ivory;
+    font-size: 20px;
+    
+}
+
+th {
+    font-family: "Kanit";
+    background-color: pink;
+    height: 20px;
+    padding: 15px;
+}
+
+tr {
+    font-family: 'Kanit';
+    align-content: center;
+    padding: 15px;
+    font-size: 25px;
+}
+
+h1 {
+    text-align: center;
+    background-color: pink;
+    font-family: 'Kanit', Semi-bold; 
+}
+
+h2 { 
+    text-align: center;
+    font-family:"Kanit";
+    font-size: medium;
+    font-size: 30px;
+    padding-right: 40px;
+}
+
+main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    background-image: url("");
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+    background-color: white;
+    padding-left: 100px;
+}
+
+p {
+    text-align: center;
+    padding-right: 40px;
+
+}
+
+
+

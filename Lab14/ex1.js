@@ -8,7 +8,7 @@ const user_data_filename = 'userdata.json';
 //check if file exists before reading
 if(fs.existsSync(user_data_filename)) {
     stats=fs.statSync(user_data_filename);
-    console.log(stats);
+    console.log("user_data.json has ${stats} characters");
 
     var data = fs.readFileSync(user_data_filename, 'utf-8');
     users_reg_data = JSON.parse(data);
