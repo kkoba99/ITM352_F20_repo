@@ -122,7 +122,7 @@ app.post("/process_register", function (request, response) {
 
     if (errors.length == 0) { //if there's no errors in registration data validation
         //let POST = request.body;
-        console.log('No Errors');
+        //console.log('No Errors');
         //send data to userdata.json to be stored
         username = POST['newuser'];
         users_data[username] = {};
