@@ -18,39 +18,39 @@ app.all('*', function (request, response, next) {
     next(); //move on
 });
 
-app.use(myParser.urlencoded({ extended: true }));
+app.use(myParser.urlencoded({ extended: true })); //use myParser for the url
 
 //Code below was made with guidance from Professor Port
-app.post("/process_quantities", function (request, response) {
-    var POST = request.body;//put quantity_form POST data into variable called POST
+app.post("/process_order", function (request, response) {
+    var POST = request.body; //put quantity_form POST data into variable called POST
 
-    if (typeof POST['submitPurchase'] != 'undefined') {
+    if (typeof POST['submitPurchase'] != 'undefined') { //if submit button is pressed
 
         let hasqty = false;
         let hasErrors = false; // assume no errors to begin with
-        //validate each quantity 
-        for (i in products) {
+        
+        for (i in products) { //validate each quantity 
             qty = POST[`quantity${i}`];
-            //check if quantity is non negative integer
-            if (qty != '' && isNonNegIntString(qty) == false) {
+        
+            if (qty != '' && isNonNegIntString(qty) == false) { //check if quantity is not empty & non negative integer
                 hasErrors = true;
             }
-            //check to see if user selected any quantities
-            if (qty > 0) {
+            
+            if (qty > 0) { //check to see if user selected any quantities
                 hasqty = true;
             }
         }
-        //if no errors, send quantity data to invoice, otherwise go back to display page
+        //if no errors, pass quantity data to user login page, otherwise go back to display page
         var stringified = querystring.stringify(POST);
         if (hasqty == true && hasErrors == false) {
-            console.log(stringified);
-            response.redirect("./user_login.html?" + stringified);
+            console.log(stringified); // log quantities
+            response.redirect("./user_login.html?" + stringified); //redirect to user_login page
         }
-        else { //if no quantity inputted or invalid, notify user and send them back to display
+        else { //if no quantity inputted or invalid quantity, notify user and send them back to display
             alertstr = `<script> alert("Error! You need to select a item or enter valid quantities");
                         window.history.back() </script>`;
 
-            response.send(alertstr);
+            response.send(alertstr); // send alert
         }
     }
 });
@@ -62,54 +62,55 @@ users_data = JSON.parse(data); // parses data variable into JSON them passes it 
 //This takes the login info from login_form on user_login.html, checks if user exists in userdata.json, if they do then redirect to invoice. 
 app.post("/process_login", function (request, response) {
 
-    //var purchase_qty = querystring.stringify(request.body);
-
-    if (typeof users_data[request.body.username] != 'undefined') { //if username matches stored username in userdata.json
-        if (request.body.password == users_data[request.body.username].password) { //if the password matches the stored password
-            // POST = request.body;
-            // var qs = request.stringified;
-            // console.log(qs);
-            //response.redirect('/invoice.html?' + querystring.stringify(request.query)); 
-            //console.log(purchase_qty); 
-            alertstr = `<script> alert("Success! You can now complete your order."); 
-           window.location.href ="invoice.html" </script>`; //display this message if successful login
-            response.redirect("./invoice.html"); // then redirect to invoice
-            response.send(alertstr);// send alert
-        }
-    } else { // if the username/password doesn't match, display this message alert and go back to login page
+    if (typeof users_data[request.body.username] == 'undefined') { //if username matches stored username in userdata.json
+        POST = request.body;
         alertstr = `<script> alert("User does not exist! Please register.");
         window.history.back() </script>`;
 
         response.send(alertstr); // send alert
-    }
+    } 
 
-});
+    if (request.body.password != users_data[request.body.username].password) { //if the password matches the stored password
+        POST = request.body;
+        alertstr = `<script> alert("Password is incorrect!");
+        window.history.back() </script>`;
+
+        response.send(alertstr); // send alert
+
+    } else {
+        POST = request.body;
+        console.log(POST);
+
+        response.redirect("./invoice.html?" + querystring.stringify(request.query)); // !!!!!!!!!!!!
+    }});
+        
 
 
 
 //This processes registration info, if data is valid then write data to file, then redirect to invoice
 app.post("/process_register", function (request, response) {
+    
     let POST = request.body;
     var errors = [];
-
+    errors.push(POST);
     //code below checks if valid registration data is entered 
     //username validation
     if (request.body.newuser.length < 4) {
-        errors.push("User name is too short!");
+        errors.push("Username is too short!");
     };
     if (request.body.newuser.length > 25) {
-        errors.push("User name is too long!");
+        errors.push("Username is too long!");
     };
     if ((/^[0-9a-zA-Z]+$/).test(request.body.newuser) == false) { // got the (/^[0-9a-zA-Z]+$/) from w3resource.com
-        errors.push("User name can only contain letters or numbers!");
+        errors.push("Username can only contain letters or numbers!");
     };
     //full name validation
     if (request.body.newfullname.length > 30) {
         errors.push("Name is too long!");
     };
-    if ((/^[a-z]+[' ']+[A-Z]+$/).test(request.body.newfullname) == false) {
-        errors.push("Name can only contain letters!");
-    };
+    //if ((/^[A-Za-z]+$/).test(request.body.newfullname) == false) {
+       // errors.push("Name can only contain letters!");
+    //};
     //password validation
     if (request.body.newpass.length < 6) {
         errors.push("Password is too short!");
@@ -119,15 +120,9 @@ app.post("/process_register", function (request, response) {
         errors.push("Password confirmation does not match!");
     };
 
-    // IGNORE THE CODE BELOW, WIP
-    //email validation (modified from w3resource)
-    //if ((/^[a-zA-Z0-9._]+[@]+[a-zA-Z0-9.]+[.]+[a-zA-Z]+*$/).test(request.body.newemail) == false) {
-    // errors.push("Email is invalid!");
-    //}
-    // IGNORE THE CODE ABOVE, WIP
-
     if (errors.length == 0) { //if there's no errors in registration data validation
-
+        //let POST = request.body;
+        console.log('No Errors');
         //send data to userdata.json to be stored
         username = POST['newuser'];
         users_data[username] = {};
@@ -135,14 +130,13 @@ app.post("/process_register", function (request, response) {
         users_data[username].password = POST['newpass'];
         users_data[username].email = POST['newemail'];
         reg_info_str = JSON.stringify(users_data); //parse and store new user data in reg_info_str
-        fs.writeFileSync(user_data_filename, reg_info_str); // write to userdata.json file
-        alertstr = `<script> alert("Success! You can now complete your order.");
-    window.location.href ="invoice.html"</script>`; //display successful alert and redirect to invoice.html
+        fs.writeFileSync(user_data_filename, reg_info_str, "utf-8"); // write to userdata.json file 
 
-        response.send(alertstr);//send alert
-
-    } else { // if there's a problem, display this alert and go back to login page
-        alertstr = `<script> alert("There seems to be a registration error");
+        response.redirect("./invoice.html");//send alert
+    };
+    if (errors.length > 0){ // if there's a problem, display this alert and go back to login page
+    console.log(errors);
+        alertstr = `<script> alert("There seems to be a registration error.");
         window.history.back() </script>`;
 
         response.send(alertstr);//send alert

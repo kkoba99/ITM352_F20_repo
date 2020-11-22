@@ -14,9 +14,9 @@
 
 <body>
     <main>
-        <div name="login_form" id="login_form" style="display: block;">
+        <div name="login_form" id="login_form" style="display: block;"> <! -- Indicated for the function on the bottom -->
             <h1>Login to complete purchase!</h1>
-            <form name="login_form" action="process_login" method="POST">
+            <form name="login_form" action="process_login" method="POST"> <! -- To pass to server -->
                 <label>Username</label>
                 <input type="text" name="username" size="40" placeholder="enter username"><br />
                 <br>
@@ -68,5 +68,5 @@
 </script>
 
 <script>
-   // login_form.action += '?' + location.search;
+   login_form.action += '?' + location.search;
 </script>
