@@ -1,0 +1,5 @@
+<! -- Assignment 1, Kylee Dean-Kobatake -->
+<! -- Temporary Invoice Page -->
+<! -- Taken from Lab13, excercise 4 -->
+
+<h2>Thank you for purchasing ${q} ${item}. Your total is \$${q * item_price}!</h2>

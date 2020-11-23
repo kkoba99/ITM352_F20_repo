@@ -2,7 +2,9 @@
 <! -- Invoice Page -->
 <! -- Referenced from Justina Bui in ITM352 and Invoice4 WOD-->
 
-<script src="./product_data.js" type="text/javascript">//Links product data to the invoice</script>
+<script src="./product_data.js" type="text/javascript">//Links product data to the invoice
+</script>
+
 
 <script>
    //Code below is referenced from Justina Bui in ITM352
@@ -22,11 +24,14 @@
     }
     //Code above is referenced from Justina Bui in ITM352
 
-    const user_data_filename = 'userdata.json'; // assign userdata.json to user_data_filename
-    var data = fs.readFileSync(user_data_filename, 'utf-8'); // reads the data in user_data_filename and puts into data variable
-    users_data = JSON.parse(data); // parses data data (lol) and puts into users_reg_data
 
-    var fullname = users_data[username].name;
+    if(params.has('username')){
+    var name = params.get('name');
+    var username = params.get('username');
+  }
+
+
+    
 </script>
 
 <!DOCTYPE html>
@@ -44,8 +49,9 @@
     <h1>Heart Depot Invoice</h1>
         <main>
 
-            <h2>Thank you for shopping at Heart Depot
-                <script>document.write(fullname);</script>
+            <h2>Thank you for shopping at Heart Depot 
+                <script>document.write(`${username}`)</script>
+                
                 <br> Below is your order:
             </h2>
         <table border="1">

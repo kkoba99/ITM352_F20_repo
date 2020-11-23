@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Depot</title>
+    <script src="./product_data.js" type="text/javascript">//Copied from assignment 1 instructions</script>
+    <link rel="stylesheet" href="./products-style.css">
+</head>
+<body>
+    <h1>Heart Depot</h1>
+    <form name="product_display_page" action="/process_form" method="POST">
+    <script>
+        for(i=1; i<=products_array.length; i++) {
+            document.write(
+            `<section class="item">
+        <h2>${products_array[i].item}</h2>
+        <p>${products_array[i].price}</p>
+        <img src= "./images/${products_array[i].image}" >
+        <br>
+        <label for="quantity_textbox">Quantity:</label>
+        <input type="text" name="quantity_textbox${i}" onkeyup="checkQuantityTextbox(this);">
+        <span id="quantity_textbox${i}_message"></span>
+        <br>
+        </section>`
+            );
+        }
+    </script>
+    <input type="submit" value='Purchase' name="purchase_submit_button" style="font-family: Kanit; background-color: darkred; color: white">
+    </form>
+</body>
+</html>

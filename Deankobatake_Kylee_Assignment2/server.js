@@ -9,7 +9,6 @@ const querystring = require('querystring'); //loads the querystring module in va
 var express = require('express'); // Starts express
 var app = express(); // Puts express in variable app
 var myParser = require("body-parser"); //loads body-parser module in variable myParser
-const { response } = require('express');
 var fs = require('fs');
 
 // catches all incoming requests
@@ -28,14 +27,14 @@ app.post("/process_order", function (request, response) {
 
         let hasqty = false;
         let hasErrors = false; // assume no errors to begin with
-        
+
         for (i in products) { //validate each quantity 
             qty = POST[`quantity${i}`];
-        
+
             if (qty != '' && isNonNegIntString(qty) == false) { //check if quantity is not empty & non negative integer
                 hasErrors = true;
             }
-            
+
             if (qty > 0) { //check to see if user selected any quantities
                 hasqty = true;
             }
@@ -61,68 +60,81 @@ users_data = JSON.parse(data); // parses data variable into JSON them passes it 
 
 //This takes the login info from login_form on user_login.html, checks if user exists in userdata.json, if they do then redirect to invoice. 
 app.post("/process_login", function (request, response) {
-
-    if (typeof users_data[request.body.username] == 'undefined') { //if username matches stored username in userdata.json
-        POST = request.body;
+    console.log(request);
+    if (typeof users_data[request.body.username] != 'undefined') { //if username matches stored username in userdata.json
+        if (request.body.password != users_data[request.body.username].password) { //if the password matches the stored password
+        
+            alertstr = `<script> alert("Password is incorrect!");
+            window.history.back() </script>`;
+    
+            response.send(alertstr); // send alert
+    
+        } else {
+            string_with_quantities = request.query;
+            string_with_username = request.body;
+            console.log(request);
+            
+            response.redirect("./invoice.html?" + querystring.stringify(string_with_quantities) + "&" + querystring.stringify(string_with_username)); // 
+        }
+        
+    } else {
         alertstr = `<script> alert("User does not exist! Please register.");
         window.history.back() </script>`;
 
         response.send(alertstr); // send alert
-    } 
+    }
 
-    if (request.body.password != users_data[request.body.username].password) { //if the password matches the stored password
-        POST = request.body;
-        alertstr = `<script> alert("Password is incorrect!");
-        window.history.back() </script>`;
 
-        response.send(alertstr); // send alert
+});
 
-    } else {
-        POST = request.body;
-        console.log(POST);
-
-        response.redirect("./invoice.html?" + querystring.stringify(request.query)); // !!!!!!!!!!!!
-    }});
-        
 
 
 
 //This processes registration info, if data is valid then write data to file, then redirect to invoice
 app.post("/process_register", function (request, response) {
-    
+
     let POST = request.body;
     var errors = [];
-    errors.push(POST);
-    //code below checks if valid registration data is entered 
+    //errors.push(POST);
+
     //username validation
+    if (typeof users_data[request.body.newuser] != 'undefined') {
+       errors.push("Username exists!")
+    }
     if (request.body.newuser.length < 4) {
         errors.push("Username is too short!");
-    };
+    }
+
     if (request.body.newuser.length > 25) {
         errors.push("Username is too long!");
-    };
+    }
+
     if ((/^[0-9a-zA-Z]+$/).test(request.body.newuser) == false) { // got the (/^[0-9a-zA-Z]+$/) from w3resource.com
         errors.push("Username can only contain letters or numbers!");
-    };
+    }
+
     //full name validation
     if (request.body.newfullname.length > 30) {
         errors.push("Name is too long!");
+    }
+
+    if (/^[A-Za-z]+$/.test(request.body.name)) { //No response if name is okay
+    } else { //code from Justina
+        errors.push("Name can only contain letters!");
     };
-    //if ((/^[A-Za-z]+$/).test(request.body.newfullname) == false) {
-       // errors.push("Name can only contain letters!");
-    //};
     //password validation
     if (request.body.newpass.length < 6) {
         errors.push("Password is too short!");
-    };
+    }
+
     //confirm password validation
     if (request.body.newpass != request.body.newpass_confirm) {
         errors.push("Password confirmation does not match!");
-    };
+    }
 
     if (errors.length == 0) { //if there's no errors in registration data validation
-        //let POST = request.body;
-        //console.log('No Errors');
+        let POST = request.body;
+
         //send data to userdata.json to be stored
         username = POST['newuser'];
         users_data[username] = {};
@@ -130,12 +142,14 @@ app.post("/process_register", function (request, response) {
         users_data[username].password = POST['newpass'];
         users_data[username].email = POST['newemail'];
         reg_info_str = JSON.stringify(users_data); //parse and store new user data in reg_info_str
-        fs.writeFileSync(user_data_filename, reg_info_str, "utf-8"); // write to userdata.json file 
+        fs.writeFileSync(user_data_filename, reg_info_str, "utf-8");
+        string_with_quantities = request.query;
+        console.log(request);
 
-        response.redirect("./invoice.html");//send alert
-    };
-    if (errors.length > 0){ // if there's a problem, display this alert and go back to login page
-    console.log(errors);
+        response.redirect("./invoice.html?" + querystring.stringify(string_with_quantities)) // write to userdata.json file 
+    } else {
+        //if (errors.length > 0){ // if there's a problem, display this alert and go back to login page
+        console.log(errors);
         alertstr = `<script> alert("There seems to be a registration error.");
         window.history.back() </script>`;
 
