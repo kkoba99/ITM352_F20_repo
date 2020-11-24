@@ -58,33 +58,32 @@ const user_data_filename = 'userdata.json'; // assign userdata.json to user_data
 var data = fs.readFileSync(user_data_filename, 'utf-8'); // reads the data in user_data_filename and puts it into data variable
 users_data = JSON.parse(data); // parses data variable into JSON them passes it into users_reg_data
 
-//This takes the login info from login_form on user_login.html, checks if user exists in userdata.json, if they do then redirect to invoice. 
+//This takes the login info from login_form on user_login.html, checks if user exists in userdata.json, if they do and password is correct, then redirect to invoice. 
 app.post("/process_login", function (request, response) {
     console.log(request);
-    if (typeof users_data[request.body.username] != 'undefined') { //if username matches stored username in userdata.json
-        if (request.body.password != users_data[request.body.username].password) { //if the password matches the stored password
-        
+    if (typeof users_data[request.body.username] != 'undefined') { //if username exists in userdata.json
+        if (request.body.password != users_data[request.body.username].password) { //if the password doesn't match the stored password
+
             alertstr = `<script> alert("Password is incorrect!");
             window.history.back() </script>`;
-    
+
             response.send(alertstr); // send alert
-    
-        } else {
-            string_with_quantities = request.query;
-            string_with_username = request.body;
+
+
+        } else { // if the password does match 
+            string_with_quantities = request.query; //get quantities string
+            string_with_username = request.body; // get username string
             console.log(request);
-            
-            response.redirect("./invoice.html?" + querystring.stringify(string_with_quantities) + "&" + querystring.stringify(string_with_username)); // 
+
+            response.redirect("./invoice.html?" + querystring.stringify(string_with_quantities) + "&" + querystring.stringify(string_with_username)); // redirect to invoice with the two strings
         }
-        
-    } else {
+
+    } else { // if the username does not exist in userdata.json
         alertstr = `<script> alert("User does not exist! Please register.");
         window.history.back() </script>`;
 
         response.send(alertstr); // send alert
     }
-
-
 });
 
 
@@ -95,40 +94,42 @@ app.post("/process_register", function (request, response) {
 
     let POST = request.body;
     var errors = [];
-    //errors.push(POST);
+
 
     //username validation
-    if (typeof users_data[request.body.newuser] != 'undefined') {
-       errors.push("Username exists!")
+    if (typeof users_data[request.body.newuser.toLowerCase] != 'undefined') { // if username exists in userdata.json
+        errors.push("Username exists!")
     }
-    if (request.body.newuser.length < 4) {
+
+    if (request.body.newuser.length < 4) { //if username is less than four characters long
         errors.push("Username is too short!");
     }
 
-    if (request.body.newuser.length > 25) {
+    if (request.body.newuser.length > 25) { //if username is more than 25 characters long
         errors.push("Username is too long!");
     }
 
     if ((/^[0-9a-zA-Z]+$/).test(request.body.newuser) == false) { // got the (/^[0-9a-zA-Z]+$/) from w3resource.com
-        errors.push("Username can only contain letters or numbers!");
+        errors.push("Username can only contain letters or numbers!"); // if username has characters other than letters/numbers
     }
 
     //full name validation
-    if (request.body.newfullname.length > 30) {
+    if (request.body.newfullname.length > 30) { //if full name is more than 25 characters long
         errors.push("Name is too long!");
     }
 
-    if (/^[A-Za-z]+$/.test(request.body.name)) { //No response if name is okay
-    } else { //code from Justina
+    if (/^[A-Za-z]+$/.test(request.body.name)) { //(code from Justina) if full name contains characters beside letters
+    } else {
         errors.push("Name can only contain letters!");
-    };
+    }
+
     //password validation
-    if (request.body.newpass.length < 6) {
+    if (request.body.newpass.length < 6) { //if password is less than six characters long
         errors.push("Password is too short!");
     }
 
     //confirm password validation
-    if (request.body.newpass != request.body.newpass_confirm) {
+    if (request.body.newpass != request.body.newpass_confirm) { //if password confirm does not match password
         errors.push("Password confirmation does not match!");
     }
 
@@ -142,13 +143,14 @@ app.post("/process_register", function (request, response) {
         users_data[username].password = POST['newpass'];
         users_data[username].email = POST['newemail'];
         reg_info_str = JSON.stringify(users_data); //parse and store new user data in reg_info_str
-        fs.writeFileSync(user_data_filename, reg_info_str, "utf-8");
-        string_with_quantities = request.query;
-        console.log(request);
+        fs.writeFileSync(user_data_filename, reg_info_str, "utf-8");// write to file
+        string_with_quantities = request.query; //get quantities query string
+        string_with_reg_data = request.body; //get string with registration data
+        console.log(string_with_reg_data);
 
-        response.redirect("./invoice.html?" + querystring.stringify(string_with_quantities)) // write to userdata.json file 
+        response.redirect("./invoice.html?" + querystring.stringify(string_with_quantities) + "&" + querystring.stringify(string_with_reg_data)); //redirect to invoice with quantities string and registration data string
     } else {
-        //if (errors.length > 0){ // if there's a problem, display this alert and go back to login page
+
         console.log(errors);
         alertstr = `<script> alert("There seems to be a registration error.");
         window.history.back() </script>`;
@@ -156,28 +158,6 @@ app.post("/process_register", function (request, response) {
         response.send(alertstr);//send alert
     }
 });
-
-// IGNORE THE CODE BELOW, WIP
-
-//this needs to make sure that there's no empty user/name/pass/email is submitted.
-/*let POST = request.body;
-if (POST['newuser'] == [" "]) {
-    alertstr = `<script> alert("Oops! You need to finish filling out the form!");
-    window.history.back() </script>`;
-
-    response.send(alertstr); // if there's a empty value, send alert and send back 
-} else {
-    response.redirect("./invoice.html"); // if registration is good, send to invoice
-};*/
-
-
-//function to check if user exists in user_data.json file
-/*function does_user_exist() {
-    let check_for_user = fs.readFileSync(user_data.JSON, 'utf-8');
-    console.log(check_for_user);
-};*/
-
-// IGNORE THE CODE ABOVE, WIP
 
 //Function below is from ITM352 Lab12, checks if quantities entered are a number, non-negative, and an integer
 function isNonNegIntString(string_to_check, returnErrors = false) {

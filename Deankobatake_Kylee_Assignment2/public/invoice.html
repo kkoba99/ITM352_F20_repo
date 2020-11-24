@@ -24,14 +24,13 @@
     }
     //Code above is referenced from Justina Bui in ITM352
 
-
+    //Code referenced from Daphne Oh
     if(params.has('username')){
     var name = params.get('name');
     var username = params.get('username');
+    var newusername = params.get('newfullname');
   }
-
-
-    
+   
 </script>
 
 <!DOCTYPE html>
@@ -42,7 +41,6 @@
     <link href="./invoice-style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&effect=neon|Open Sans">
     <title>Heart Depot Invoice</title>
-
 </head>
 
 <body>
@@ -50,7 +48,7 @@
         <main>
 
             <h2>Thank you for shopping at Heart Depot 
-                <script>document.write(`${username}`)</script>
+                <script>document.write(`<font color="pink">${username}</font>`)</script>
                 
                 <br> Below is your order:
             </h2>
