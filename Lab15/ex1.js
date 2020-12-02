@@ -1,6 +1,12 @@
-//enables cookies
+var express = require('express');
+var app = express();
+var myParser = require("body-parser");
+const fs = require('fs'); //require fs package
 var cookieParser = require('cookie-parser');
+
 app.use(cookieParser());
+
+const user_data_filename = 'userdata.json';
 
 //check if file exists before reading
 if(fs.existsSync(user_data_filename)) {
@@ -21,6 +27,20 @@ if(fs.existsSync(user_data_filename)) {
 }
 
 app.use(myParser.urlencoded({ extended: true }));
+
+app.get("/set_cookie", function (request, response) {
+    response.cookie("myname", "kylee", {maxAge: 5*1000});
+    response.send("cookie sent");
+});
+
+app.get("/use_cookie", function (request, response) {
+    console.log(request.cookies);
+    thaname = "Anon";
+    if(typeof request.cookies['myname'] != "undefined") {
+        thaname = request.cookies["myname"]
+    }
+    response.send(`Welcome to the cookie page ${yourname}`);
+});
 
 app.get("/login", function (request, response) {
     // Give a simple login form
