@@ -71,11 +71,11 @@ app.post("/process_login", function (request, response) {
 
 
         } else { // if the password does match 
-            string_with_quantities = request.query; //get quantities string
-            string_with_username = request.body; // get username string
+            query_string_object = request.query; //quantities from query string
+            query_string_object["username"] = request.body.username; // get username string
             console.log(request);
 
-            response.redirect("./invoice.html?" + querystring.stringify(string_with_quantities) + "&" + querystring.stringify(string_with_username)); // redirect to invoice with the two strings
+            response.redirect("./invoice.html?" + querystring.stringify(query_string_object)); // redirect to invoice with the two strings
         }
 
     } else { // if the username does not exist in userdata.json
@@ -144,11 +144,11 @@ app.post("/process_register", function (request, response) {
         users_data[username].email = POST['newemail'];
         reg_info_str = JSON.stringify(users_data); //parse and store new user data in reg_info_str
         fs.writeFileSync(user_data_filename, reg_info_str, "utf-8");// write to file
-        string_with_quantities = request.query; //get quantities query string
-        string_with_reg_data = request.body; //get string with registration data
-        console.log(string_with_reg_data);
+        query_string_object = request.query; //quantities from query string
+            query_string_object["username"] = username; // get username string
+            console.log(request);
 
-        response.redirect("./invoice.html?" + querystring.stringify(string_with_quantities) + "&" + querystring.stringify(string_with_reg_data)); //redirect to invoice with quantities string and registration data string
+            response.redirect("./invoice.html?" + querystring.stringify(query_string_object)); // redirect to invoice with the two strings
     } else {
 
         console.log(errors);
