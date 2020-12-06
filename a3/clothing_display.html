@@ -1,41 +1,46 @@
+<!-- Imports the "clothing" product data-->
 <script src="./product_data.js" type="text/javascript"></script>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./products-display-style.css" rel="stylesheet">
+    <link href="./website-display-style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&effect=neon|Open Sans">
     <title>Heart Depot</title>
 </head>
 
 <body>
-        <div class="header">
-            <img src="./images/headerr.jpg">
-        </div>
+    <div class="header">
+        <!-- Holds the image that makes the header of the website, "Heart Depot"-->
+        <img src="./images/headerr.jpg">
+    </div>
 
-        <div class="navbar">
-            <!-- modified from W3school's navbar example at https://www.w3schools.com/css/css_navbar_horizontal.asp--> 
-            <ul>
+    <div class="navbar">
+        <!-- modified from W3school's navbar example at https://www.w3schools.com/css/css_navbar_horizontal.asp-->
+        <ul>
             <li><a href="./index.html" style="float: left;">Home</a></li>
             <li><a href="./clothing_display.html" style="float: left;">Clothing</a></li>
             <li><a href="./jewelry_display.html" style="float: left;">Jewelry</a></li>
             <li><a href="./homedecor_display.html" style="float: left;">Home Decor</a></li>
             <li><a href="./login.html" style="float: right;">Login</a></li>
             <li><a href="#about" style="float: right;">Shopping Cart</a></li>
-            </ul>
-        </div>
-        
-        <br>
-        <br>
+        </ul>
+    </div>
 
-        <div class="product_display_visuals">
-            <form name="quantity_form" action="./process_order" method="POST">
-                <script>
-                    //For loop that generates the products on the display page
-                    for (i = 0; i < products.length; i++) {
-                        document.write(`
+    <br>
+    <br>
+
+    <div class="product_display_visuals">
+        <!-- Form that takes the quantity data for an item and POSTs it to the server-->
+        <form name="quantity_form" action="./process_order" method="POST"> <!--Might have to change "name"-->
+            <!-- Script that creates the product displays on the page -->
+            <script>
+                //Loop that goes through the product data and generates them on the page
+                for (i = 0; i < products.length; i++) {
+                    document.write(`
                         <section class="item">
                             <h2>${products[i].item}</h2>
                              <p>${products[i].price}</p>
@@ -50,15 +55,16 @@
                             <input type="submit" value="Add to Cart" name="add_quantity_to_cart">
                         </section>
                     `);
-                    }      
-                </script>
-            </form>
-        </div>
-        
+                }      
+            </script>
+        </form>
+    </div>
 </body>
+
 </html>
 
 
+<!-- Script that checks and alerts if "invalid" quantities are inputted into the quantity textbox on the page-->
 <script>
     //Modified from ITM352 Lab12, checks for invalid quantities
     function isNonNegIntString(string_to_check, returnErrors = false) {
