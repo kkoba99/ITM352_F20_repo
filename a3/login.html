@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./index-style.css" rel="stylesheet">
+    <link href="./products-display-style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&effect=neon|Open Sans">
     <title>Heart Depot</title>
 </head>
 <body>
-       
-        <div class="header">
-            <img src="./images/headerr.jpg">
-        </div>
+    <div class="header">
+        <img src="./images/headerr.jpg">
+    </div>
 
-        <div class="navbar">
-            <a href="./index.html">Home</a>
-            <a href="./clothing_display.html">Clothing</a>
-            <a href="./jewelry_display.html">Jewelry</a>
-            <a href="./homedecor_display.html">Home Decor</a>
-            <a href="./login.html" style="float: right;">Login</a>
-            <a href="#about" style="float: right;">Shopping Cart</a>
-        </div>
-
-
-        <br>
-
+    <div class="navbar">
+        <!-- modified from W3school's navbar example at https://www.w3schools.com/css/css_navbar_horizontal.asp--> 
+        <ul>
+        <li><a href="./index.html" style="float: left;">Home</a></li>
+        <li><a href="./clothing_display.html" style="float: left;">Clothing</a></li>
+        <li><a href="./jewelry_display.html" style="float: left;">Jewelry</a></li>
+        <li><a href="./homedecor_display.html" style="float: left;">Home Decor</a></li>
+        <li><a href="./login.html" style="float: right;">Login</a></li>
+        <li><a href="#about" style="float: right;">Shopping Cart</a></li>
+        </ul>
+    </div>
+    
+    <br>
+    <br>
 
         <form name="login_form" action="process_login" method="POST">
             <! -- To pass to server -->

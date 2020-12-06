@@ -2,38 +2,38 @@
 products = 
 [
   {
-      "item":"Heart Shirt",
-      "price": 19.99,
-      "image":"heart_1.PNG"
+      "item":"Versace Heart Sweater",
+      "price": 39.99,
+      "image":"heart_1.jpg"
   },
 
   {
-      "item":"Heart Purse",
-      "price": 34.99,
-      "image":"heart_2.PNG"
+      "item":"Heart Patch Pants",
+      "price": 19.99,
+      "image":"heart_2.jpg"
   },
   
   {
-      "item":"Heart Shaped Purse",
+      "item":"J'Adore Heart Sweater",
       "price": 39.99,
-      "image":"heart_3.PNG"
+      "image":"heart_3.jpg"
   },
 
   {
-      "item":"Heart Wallet",
+      "item":"Adidas Heart Shoes",
       "price": 24.99,
-      "image":"heart_4.PNG"
+      "image":"heart_4.jpg"
   },
 
   {
-      "item":"Heart Sweatshirt",
-      "price": 29.99,
-      "image":"heart_5.PNG"
+      "item":"Love Moschino Sweater",
+      "price": 39.99,
+      "image":"heart_5.jpg"
   },
 
   {
-      "item":"Heart Mugs",
-      "price": 14.99,
+      "item":"Keith Haring Long Sleeve",
+      "price": 19.99,
       "image":"heart_6.jpg"
   }
 ];
