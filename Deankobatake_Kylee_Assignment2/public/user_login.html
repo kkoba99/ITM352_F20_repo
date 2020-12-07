@@ -5,6 +5,31 @@
         <html lang="en">
 
         <head>
+            <script>
+                // Get the query string data in a easy to use object
+                let params = (new URL(document.location)).searchParams;
+                // Example from P2 to use error data in query string to display erorrs in where they occured
+                // Only for login form right now!
+                // Needs to be done after the document loads to access the form elements
+                window.onload = function () {
+                    // If there is a username error, display an error in the span next to the texbox
+                    if (params.has('username_error')) {
+                        username_textbox_message_span.innerHTML = params.get('username_error');
+                        // need to delete this error or it will be sent to the server and saved
+                        params.delete('username_error');
+                    }
+                    // If there is a password error just display the error, no need to put the password in again
+                    if (params.has('password_error')) {
+                        password_textbox_message_span.innerHTML = params.get('password_error');
+                        // need to delete this error or it will be sent to the server and saved
+                        params.delete('password_error');
+                    }
+                    // Make sure the errors are not put in the query string by using the params object
+                    login_form.action += `?${params.toString()}`; //when login_form action is triggered, location search
+                    register_form.action += `?${params.toString()}`; //when register_form action is triggered, location search
+                }            
+            </script>
+
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Heart Depot Login</title>
@@ -21,10 +46,19 @@
                             <! -- To pass to server -->
                                 <label>Username</label>
                                 <input type="text" name="username" size="40" placeholder="enter username"
-                                    id="username"><br />
+                                    id="username"><span id="username_textbox_message_span"></span>
+                                <script>
+                                    // makes the username textbox sticky if the username is in the querystring
+                                    if (params.has('username')) {
+                                        login_form['username'].value = params.get('username');
+                                    }
+                                </script>
+                                <br />
                                 <br>
                                 <label>Password</label>
-                                <input type="password" name="password" size="40" placeholder="enter password"><br />
+                                <input type="password" name="password" size="40" placeholder="enter password">
+                                <span id="password_textbox_message_span"></span>
+                                <br />
                                 <br>
                                 <input type="submit" value="Submit" id="submit">
                                 <br>
@@ -72,6 +106,4 @@
                 document.getElementById("login_form_div").style.display = "none";
             }
 
-            login_form.action += location.search; //when login_form action is triggered, location search
-            register_form.action += location.search; //when register_form action is triggered, location search
         </script>
