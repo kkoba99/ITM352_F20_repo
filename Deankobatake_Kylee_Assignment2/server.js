@@ -69,6 +69,7 @@ app.post("/process_login", function (request, response) {
 
         query_string_object['password_error']= "Password is incorrect!";
 
+        query_string_object['password_error']= "Password is incorrect!";
         } else { // if the password does match 
             console.log(request);
             response.redirect("./invoice.html?" + querystring.stringify(query_string_object)); // redirect to invoice with the two strings

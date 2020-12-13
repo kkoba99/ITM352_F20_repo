@@ -47,6 +47,7 @@
                                 <label>Username</label>
                                 <input type="text" name="username" size="40" placeholder="enter username"
                                 id="username"><span id="username_textbox_message_span" style="color: red; font-family: Kanit;"></span>
+                                    id="username"><span id="username_textbox_message_span"></span>
                                 <script>
                                     // makes the username textbox sticky if the username is in the querystring
                                     if (params.has('username')) {
@@ -58,6 +59,7 @@
                                 <label>Password</label>
                                 <input type="password" name="password" size="40" placeholder="enter password">
                                 <span id="password_textbox_message_span" style="color: red; font-family: Kanit;"></span>
+                                <span id="password_textbox_message_span"></span>
                                 <br />
                                 <br>
                                 <input type="submit" value="Submit" id="submit">
@@ -105,4 +107,5 @@
                 document.getElementById("register_form_div").style.display = "block";
                 document.getElementById("login_form_div").style.display = "none";
             }
+
         </script>
