@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var myParser = require("body-parser");
 const fs = require('fs'); //require fs package
-var cookieParser = require('cookie-parser');
+var cookieParser = require('cookie-parser')
 
 app.use(cookieParser());
 
@@ -10,39 +10,58 @@ const user_data_filename = 'userdata.json';
 
 //check if file exists before reading
 if(fs.existsSync(user_data_filename)) {
-    stats=fs.statSync(user_data_filename);
-    console.log("user_data.json has ${stats} characters");
+    stats = fs.statSync(user_data_filename);
+    console.log("user_data.json has ${stats['size']} characters");
 
     var data = fs.readFileSync(user_data_filename, 'utf-8');
     users_reg_data = JSON.parse(data);
-    // add new user
-    username = 'newuser';
-    users_reg_data[username] = {};
-    users_reg_data[username].password = 'newpass';
-    users_reg_data[username].email = 'newuser@user.com';
-    //write updated object to user_data_filename
-    reg_info_str = JSON.stringify(users_reg_data);
-    fs.writeFileSync(user_data_filename, reg_info_str);
 
 }
 
 app.use(myParser.urlencoded({ extended: true }));
 
 app.get("/set_cookie", function (request, response) {
-    response.cookie("myname", "kylee", {maxAge: 5*1000});
-    response.send("cookie sent");
-});
+    response.cookie('myname', "kylee", {maxAge: 5 * 1000});
+    response.send('cookie sent!');
+ });
 
-app.get("/use_cookie", function (request, response) {
+app.get("/use_cookie", function (request,response) {
     console.log(request.cookies);
-    thaname = "Anon";
-    if(typeof request.cookies['myname'] != "undefined") {
-        thaname = request.cookies["myname"]
+    thename = "Anonymous";
+    if(typeof request.cookies['myname'] != 'undefined') {
+        thename = request.cookies['myname']
     }
-    response.send(`Welcome to the cookie page ${yourname}`);
-});
+    response.send(`Welcome to the Use Cookie page ${thename}`)
+})
 
-app.get("/login", function (request, response) {
+
+app.get("/register", function (request, response) {
+    // Give a simple register form
+    str = `
+<body>
+<form action="process_register" method="POST">
+<input type="text" name="username" size="40" placeholder="enter username" ><br />
+<input type="password" name="password" size="40" placeholder="enter password"><br />
+<input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
+<input type="email" name="email" size="40" placeholder="enter email"><br />
+<input type="submit" value="Submit" id="submit">
+</form>
+</body>
+    `;
+    response.send(str);
+ });
+
+ app.post("/process_register", function (request, response) {
+     username = request.body.username;
+     users_reg_data[username] = {};
+     users_reg_data[username].password = request.body.password;
+     users_reg_data[username].email = request.body.email;
+
+     reg_info_str = JSON.stringify(users_reg_data);
+     fs.writeFileSync(user_data_filename, reg_info_str);
+ });
+
+ app.get("/login", function (request, response) {
     // Give a simple login form
     str = `
 <body>
@@ -55,6 +74,7 @@ app.get("/login", function (request, response) {
     `;
     response.send(str);
  });
+
 
 app.post("/process_login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not

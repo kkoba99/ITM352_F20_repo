@@ -61,29 +61,26 @@ users_data = JSON.parse(data); // parses data variable into JSON them passes it 
 //This takes the login info from login_form on user_login.html, checks if user exists in userdata.json, if they do and password is correct, then redirect to invoice. 
 app.post("/process_login", function (request, response) {
     console.log(request);
+    query_string_object = request.query; //save quantities from query string
+    query_string_object["username"] = request.body.username; // put username in query_string_object
+
     if (typeof users_data[request.body.username] != 'undefined') { //if username exists in userdata.json
         if (request.body.password != users_data[request.body.username].password) { //if the password doesn't match the stored password
 
-            alertstr = `<script> alert("Password is incorrect!");
-            window.history.back() </script>`;
-
-            response.send(alertstr); // send alert
-
+        query_string_object['password_error']= "Password is incorrect!";
 
         } else { // if the password does match 
-            query_string_object = request.query; //quantities from query string
-            query_string_object["username"] = request.body.username; // get username string
             console.log(request);
-
             response.redirect("./invoice.html?" + querystring.stringify(query_string_object)); // redirect to invoice with the two strings
+            return; // we're done here
         }
 
     } else { // if the username does not exist in userdata.json
-        alertstr = `<script> alert("User does not exist! Please register.");
-        window.history.back() </script>`;
-
-        response.send(alertstr); // send alert
+        
+        query_string_object['username_error']= "User does not exist! Please register.";
     }
+    // If we get here there was an error and need to go back to login with the quantity data and errors
+    response.redirect("./user_login.html?" + querystring.stringify(query_string_object)); // redirect to invoice with the two strings
 });
 
 
@@ -92,13 +89,17 @@ app.post("/process_login", function (request, response) {
 //This processes registration info, if data is valid then write data to file, then redirect to invoice
 app.post("/process_register", function (request, response) {
 
+    query_string_object = request.query; //save quantities from query string
+    query_string_object["newusername"] = request.body.newuser; // put username in query_string_object
+
     let POST = request.body;
     var errors = [];
 
 
     //username validation
     if (typeof users_data[request.body.newuser.toLowerCase] != 'undefined') { // if username exists in userdata.json
-        errors.push("Username exists!")
+        errors.push("Username exists!");
+        query_string_object['newusername_error']= "Username Exists!"
     }
 
     if (request.body.newuser.length < 4) { //if username is less than four characters long
@@ -151,11 +152,7 @@ app.post("/process_register", function (request, response) {
             response.redirect("./invoice.html?" + querystring.stringify(query_string_object)); // redirect to invoice with the two strings
     } else {
 
-        console.log(errors);
-        alertstr = `<script> alert("There seems to be a registration error.");
-        window.history.back() </script>`;
-
-        response.send(alertstr);//send alert
+        response.redirect("./user_login.html?" + querystring.stringify(query_string_object));
     }
 });
 

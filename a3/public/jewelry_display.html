@@ -1,7 +1,8 @@
-<!-- Imports the "clothing" product data-->
+<!-- Imports data from product_data.js to the page. The product_data.js has all the info for the website's products.-->
 <script src="./product_data.js" type="text/javascript"></script>
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -13,6 +14,7 @@
 </head>
 
 <body>
+
     <div class="header">
         <!-- Holds the image that makes the header of the website, "Heart Depot"-->
         <img src="./images/headerr.jpg">
@@ -22,29 +24,29 @@
         <!-- modified from W3school's navbar example at https://www.w3schools.com/css/css_navbar_horizontal.asp-->
         <ul>
             <li><a href="./index.html" style="float: left;">Home</a></li>
-            <li><a href="./clothing_display.html" style="float: left;">Clothing</a></li>
+            <li><a href="./clothing_display_page.html" style="float: left;">Clothing</a></li>
             <li><a href="./jewelry_display.html" style="float: left;">Jewelry</a></li>
             <li><a href="./homedecor_display.html" style="float: left;">Home Decor</a></li>
+            <li><a href="./cart.html" style="float: right;">Shopping Cart</a></li>
             <li><a href="./login.html" style="float: right;">Login</a></li>
-            <li><a href="#about" style="float: right;">Shopping Cart</a></li>
         </ul>
     </div>
 
     <br>
     <br>
 
-    <div class="product_display_visuals">
+    <div class="product_display_content">
         <!-- Form that takes the quantity data for an item and POSTs it to the server-->
         <form name="quantity_form" action="./process_order" method="POST"> <!--Might have to change "name"-->
             <!-- Script that creates the product displays on the page -->
             <script>
                 //Loop that goes through the product data and generates them on the page
-                for (i = 0; i < products.length; i++) {
+                for (i = 0; i < jewelry_array.length; i++) {
                     document.write(`
                         <section class="item">
-                            <h2>${products[i].item}</h2>
-                             <p>${products[i].price}</p>
-                             <img src= "./images/${products[i].image}" >
+                            <h2>${jewelry_array[i].item}</h2>
+                             <p>${jewelry_array[i].price}</p>
+                             <img src= "./images/${jewelry_array[i].image}" >
                             <br>    
                             <br>
                             <label id="quantity${i}_label"}">Quantity</label>
@@ -59,8 +61,8 @@
             </script>
         </form>
     </div>
-</body>
 
+</body>
 </html>
 
 

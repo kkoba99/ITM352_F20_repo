@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./website-display-style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&effect=neon|Open Sans">
+    <title>Heart Depot</title>
+</head>
+<body>
+    <div class="header">
+        <img src="./images/headerr.jpg">
+    </div>
+
+    <div class="navbar">
+        <!-- modified from W3school's navbar example at https://www.w3schools.com/css/css_navbar_horizontal.asp--> 
+        <ul>
+        <li><a href="./index.html" style="float: left;">Home</a></li>
+        <li><a href="./clothing_display_page.html" style="float: left;">Clothing</a></li>
+        <li><a href="./jewelry_display.html" style="float: left;">Jewelry</a></li>
+        <li><a href="./homedecor_display.html" style="float: left;">Home Decor</a></li>
+        <li><a href="./cart.html" style="float: right;">Shopping Cart</a></li>
+        <li><a href="./login.html" style="float: right;">Login</a></li>
+        <span id="on_login_show_username_in_navbar"></span>
+        </ul>
+    </div>
+    
+    <br>
+    <br>
+
+        <form name="login_form" action="process_login" method="POST">
+            <! -- To pass to server -->
+                <label>Username</label>
+                <input type="text" name="username" size="40" placeholder="enter username"
+                    id="username"><br />
+                <br>
+                <label>Password</label>
+                <input type="password" name="password" size="40" placeholder="enter password"><br />
+                <br>
+                <input type="submit" value="Submit" id="submit_login">
+                <br>
+                <br>
+        </form>
+
+        <br>
+
+        <p>No account? Register <a href="./registration.html">here</a></p> 
+    
+</body>
+</html>
