@@ -1,3 +1,29 @@
+<script>
+
+    // Example POST method implementation:
+async function postData(url = '', data = {}) {
+    
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+function add_to_login() {
+    postData('./process_login', { 'username':document.getElementById('username').value, 'password': document.getElementById('password').value})
+  .then(data => {
+    console.log(data);
+    document.getElementById(`on_login_show_username_in_navbar`).innerHTML = data.username;
+  });
+}
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +58,7 @@
             <! -- To pass to server -->
                 <label>Username</label>
                 <input type="text" name="username" size="40" placeholder="enter username"
-                    id="username"><br />
+                    id="username"><br/>
                 <br>
                 <label>Password</label>
                 <input type="password" name="password" size="40" placeholder="enter password"><br />

@@ -1,0 +1,91 @@
+<script>
+
+    // Example POST method implementation:
+async function postData(url = '', data = {}) {
+    
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+function add_to_login() {
+    postData('./process_login', { 'username':document.getElementById('username').value, 'password': document.getElementById('password').value})
+  .then(data => {
+    console.log(data);
+    document.getElementById(`on_login_show_username_in_navbar`).innerHTML = data.username;
+  });
+}
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body,h1,h2,h3,h4,h5,h6 {
+            font-family: "Raleway", sans-serif;
+            text-align: center;
+            background-image: url("images/background.png");
+        }body, html {
+          height: 100%;
+          line-height: 1.8;
+        }
+        .w3-bar .w3-button {
+          padding: 16px;
+        }
+        form{
+        text-align: center;
+        }
+    </style>
+<body>
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-card" id="myNavbar">
+            <a href="./index.html" class="w3-bar-item w3-button w3-wide">Heart Depot</a>
+            <!-- Right-sided navbar links -->
+            <a href="./clothing_display_page.html" style="float: middle;" class="w3-bar-item w3-button"><i
+                    class="fa fa-th"></i>Clothing</a>
+            <a href="./jewelry_display.html" style="float: middle;" class="w3-bar-item w3-button"><i
+                    class="fa fa-th"></i>Jewelry</a>
+            <a href="./homedecor_display.html" style="float: middle;" class="w3-bar-item w3-button"><i
+                    class="fa fa-th"></i>Home Decor</a>
+            <a href="./cart.html" style="float: right;" class="w3-bar-item w3-button"><i class="fa fa-usd"></i>Shopping
+                Cart</a>
+        </div>
+        <div style="background-image: url('./images/back.jpg');
+        background-size: cover; height:150px; padding-top:100px;">
+        </div>
+        <br>
+        <form name="login_form" action="process_login" method="POST">
+            <h1>Welcome to Heart Depot!</h1>
+            <!-- To pass to server -->
+            <label>Username</label><br>
+                <input type="text" name="username" size="40" placeholder="enter username"
+                    id="username"><br />
+                <br>
+            <label>Password</label><br>
+                <input type="password" name="password" size="40" placeholder="enter password"><br />
+                <br>
+                <input type="submit" value="Submit" id="submit_login">
+                <br>
+                <br>
+        </form> 
+        <br>
+        <h1>No account?</h1>
+        <h3>Register <a href="./registration.html">here</a></h3> 
+        <br>
+        <div style="background-image: url('./images/back.jpg');
+        background-size: cover; height:150px; padding-top:100px;">
+        </div>
+</body>
+</html>

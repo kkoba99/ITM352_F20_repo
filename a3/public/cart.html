@@ -45,7 +45,7 @@
         <!-- modified from W3school's navbar example at https://www.w3schools.com/css/css_navbar_horizontal.asp-->
         <ul>
             <li><a href="./index.html" style="float: left;">Home</a></li>
-            <li><a href="./clothing_display.html" style="float: left;">Clothing</a></li>
+            <li><a href="./clothing_display_page.html" style="float: left;">Clothing</a></li>
             <li><a href="./jewelry_display.html" style="float: left;">Jewelry</a></li>
             <li><a href="./homedecor_display.html" style="float: left;">Home Decor</a></li>
             <li><a href="./cart.html" style="float: right;">Shopping Cart</a></li>
@@ -53,15 +53,11 @@
         </ul>
     </div>
 
-    <div class="shopping_cart_items">
-        <table border="1">
-            <tbody>
-
-                <tr>
-                    <th>Item</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                </tr>
+    <div class="shopping-cart">
+        <!-- Title -->
+        <div class="title">
+          Shopping Cart
+        </div>
 
                 <script>
                     subtotal = 0;
@@ -72,33 +68,255 @@
                             if (quantities[i] > 0) {
                                 extended_price = quantities[i] * products[i].price;
                                 subtotal = extended_price + subtotal;
+                                //code for shopping cart below is from https://designmodo.com/shopping-cart-ui/
                                 document.write(`
-                        <tr>
-                        <td>${products[i].item}</td>
-                        <td>${quantities[i]}</td>
-                        <td>${products[i].price}</td>
-                        <td>${extended_price.toFixed(2)}</td>
-                        </tr>
+                               
+                               
+                    <div class="item">
+                        <div class="buttons">
+                        <span class="delete-btn"></span>
+                        <span class="like-btn"></span>
+                        </div>
+                    
+                        <div class="image">
+                            <img src= "./images/${products[i].image}", style="width: 50px">
+                        </div>
+                    
+                        <div class="description">
+                            <p>${products[i].item}</p>
+                        <span></span>
+                        </div>
+                    
+                        <div class="quantity">
+                        <button class="plus-btn" type="button" name="button">
+                            <img src="plus.svg" alt="" />
+                        </button>
+                        <input type="text" name="name" value="${quantities[i]}">
+                        <button class="minus-btn" type="button" name="button">
+                            <img src="minus.svg" alt="" />
+                        </button>
+                        </div>
+                    
+                        <div class="total-price">$${products[i].price}</div>
+                    </div>
+
+
+ 
                         `);
                             }
                         }
                     }
                 </script>
-
-                <tr>
-                    <script>
-                        //Generates the subtotal table row
-                        var subtotal_str =
-                            `<tr><td colspan="3">Subtotal</td><td>${subtotal.toFixed(2)}</td></tr>`;
-                        document.write(subtotal_str);
-                    </script>
-                </tr>
-
-            </tbody>
-        </table>
-
+             
     </div>
 
-</body>
+    <script>
+        //Generates the subtotal table row
+        var subtotal_str =
+            `<div class = "subtotal-price",><center>Subtotal: $${subtotal.toFixed(2)}</center></div>`;
+        document.write(subtotal_str);
+    </script>
 
+   <center> <form name="submit_cart_button" action="./go_to_invoice" method="POST">
+    <input type ="submit" value="Buy Items">
+    </form></center>
+
+</body>
 </html>
+
+<!-- code for shopping cart below is from https://designmodo.com/shopping-cart-ui/ -->
+<style>
+  * {
+  box-sizing: border-box;
+}
+ 
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  
+}
+.subtotal-price {
+    background-color: white;
+    width: 750px;
+  margin: 20px auto;
+ 
+ 
+  display: flex;
+  flex-direction: column;
+}
+.shopping-cart {
+  width: 750px;
+  margin: 20px auto;
+ 
+ 
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  height: 60px;
+  border-bottom: 1px solid #E1E8EE;
+  padding: 20px 30px;
+  color: #5E6977;
+  font-size: 18px;
+  font-weight: 400;
+}
+ 
+.item {
+background-color: white;
+  height: 120px;
+  display: flex;
+  padding: 20px;
+}
+ 
+
+.buttons {
+  position: relative;
+  padding-top: 30px;
+  margin-right: 60px;
+}
+.delete-btn,
+.like-btn {
+  display: inline-block;
+  Cursor: pointer;
+}
+.delete-btn {
+  width: 18px;
+  height: 17px;
+  background: url(&amp;quot;delete-icn.svg&amp;quot;) no-repeat center;
+}
+ 
+.like-btn {
+  position: absolute;
+  top: 9px;
+  left: 15px;
+  background: url('twitter-heart.png');
+  width: 60px;
+  height: 60px;
+  background-size: 2900%;
+  background-repeat: no-repeat;
+}
+.is-active {
+  animation-name: animate;
+  animation-duration: .8s;
+  animation-iteration-count: 1;
+  animation-timing-function: steps(28);
+  animation-fill-mode: forwards;
+}
+ 
+@keyframes animate {
+  0%   { background-position: left;  }
+  50%  { background-position: right; }
+  100% { background-position: right; }
+}
+.image {
+  margin-right: 50px;
+}
+ 
+
+.description {
+  padding-top: 10px;
+  margin-right: 60px;
+  width: 115px;
+}
+ 
+.description span {
+  display: block;
+  font-size: 14px;
+  color: #43484D;
+  font-weight: 400;
+}
+ 
+.description span:first-child {
+  margin-bottom: 5px;
+}
+.description span:last-child {
+  font-weight: 300;
+  margin-top: 8px;
+  color: #86939E;
+}
+.quantity {
+  padding-top: 20px;
+  margin-right: 60px;
+}
+.quantity input {
+  -webkit-appearance: none;
+  border: none;
+  text-align: center;
+  width: 32px;
+  font-size: 16px;
+  color: #43484D;
+  font-weight: 300;
+}
+ 
+button[class*=btn] {
+  width: 30px;
+  height: 30px;
+  background-color: #E1E8EE;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.minus-btn img {
+  margin-bottom: 3px;
+}
+.plus-btn img {
+  margin-top: 2px;
+}
+ 
+button:focus,
+input:focus {
+  outline:0;
+}
+.total-price {
+  width: 83px;
+  padding-top: 27px;
+  text-align: center;
+  font-size: 16px;
+  color: #43484D;
+  font-weight: 300;
+}
+</style>
+
+<script>
+   //code for shopping cart below is from https://designmodo.com/shopping-cart-ui/
+    
+   $('.minus-btn').on('click', function(e) {
+    		e.preventDefault();
+    		var $this = $(this);
+    		var $input = $this.closest('div').find('input');
+    		var value = parseInt($input.val());
+
+    		if (value > 1) {
+    			value = value - 1;
+    		} else {
+    			value = 0;
+    		}
+
+        $input.val(value);
+
+    	});
+
+    	$('.plus-btn').on('click', function(e) {
+    		e.preventDefault();
+    		var $this = $(this);
+    		var $input = $this.closest('div').find('input');
+    		var value = parseInt($input.val());
+
+    		if (value < 100) {
+      		value = value + 1;
+    		} else {
+    			value =100;
+    		}
+
+    		$input.val(value);
+    	});
+
+      $('.like-btn').on('click', function() {
+        $(this).toggleClass('is-active');
+      });
+    
+</script>
+
+
