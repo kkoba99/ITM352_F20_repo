@@ -28,6 +28,8 @@ app.all('*', function (request, response, next) {
     next(); //move on
 });
 
+
+
 app.post("/process_login", function (request, response) {
     POST = request.body;
     if(typeof users_reg_data[request.body.username] != 'undefined') {
@@ -42,11 +44,12 @@ app.post("/process_login", function (request, response) {
                 request.session.login.password = [POST.password];
             }
           console.log(request.session);
-          response.cookie('username', POST.username);
-          alertstr = `<script> alert("Successful login!");
-                        window.history.back() </script>`;
 
-            response.send(alertstr);
+          var user_email = users_reg_data[request.body.username].email;
+
+          response.cookie('username', POST.username);
+          response.cookie('email', user_email);
+          response.redirect("./index.html");
   
 
         } else {
@@ -56,6 +59,7 @@ app.post("/process_login", function (request, response) {
     response.send(`Hey! ${user_data_filename} does not exist`);
 }
 });
+
 
 
 app.post("/process_registration", function (request, response) {
@@ -170,9 +174,6 @@ app.post("/add_to_cart", function (request, response) {
 
 
 
-
-
-
 app.post("/get_cart_data", function (request, response) {
     if (typeof request.session.cart == 'undefined') {
         request.session.cart = {};
@@ -191,9 +192,6 @@ app.post("/get_login_data", function (request, response) {
 
 
 
-
-
-
 app.post("/go_to_invoice", function (request, response) {
     console.log(request.session.cart);
 
@@ -202,6 +200,7 @@ app.post("/go_to_invoice", function (request, response) {
                         window.history.back() </script>`;
 
             response.send(alertstr);
+           
         
     }
     //If logged in, let person go to invoice. If not, notify they need to log in.
@@ -210,7 +209,10 @@ app.post("/go_to_invoice", function (request, response) {
 
 //code from assignment 3 examples from Professor Port
 app.post("/complete_order", function (request, response) {
-    POST = request.body;
+
+    var invoice_str = `Thank you for your order! `;
+
+
     var transporter = nodemailer.createTransport({
         host: "mail.hawaii.edu",
         port: 25,
@@ -221,53 +223,35 @@ app.post("/complete_order", function (request, response) {
         }
       });
     
-      var user_email = 'kkak@hawaii.edu';
+      var user_email = request.cookies.email;
+      console.log(user_email);
       var mailOptions = {
         from: 'kkak@hawaii.edu',
         to: user_email,
         subject: 'Your Invoice',
-        html: POST
+        html: invoice_str
       };
     
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-          POST += '<br>There was an error and your invoice could not be emailed :(';
+            invoice_str += '<br>There was an error and your invoice could not be emailed :(';
         } else {
-          POST += `<br>Your invoice was mailed to ${user_email}`;
+            invoice_str += `<br>Your invoice was mailed to ${user_email}`;
         }
-        response.send(POST);
+        response.send(invoice_str);
       });
-
 })
 
 
 
 
+//code borrowed from ALyssa Mencel's Assignmetn 3 server.js
+app.post('/logout', function (request, response) { 
+    request.session.destroy(); 
+    response.clearCookie("username");
+    response.clearCookie("email");
+    response.redirect('/index.html');
 
-app.post("/login_success", function (request, response) {
-    // When the user hits the "add to cart" button for a clothing product, this app.post will add the quantity data to the session object
-    var POST = request.body
-    console.log(POST);
-
-    //check if quantity is valid, if so add to session, otherwise return error
-    has_errors = false;
-
-
-
-    if (has_errors == false) {
-        if (typeof request.session.cart == 'undefined') {
-            request.session.cart = {};
-        }
-        if (typeof request.session.cart[POST.product_key] == 'undefined') {
-            request.session.cart[POST.product_key] = [];
-        }
-        request.session.cart[POST.product_key][POST.product_index] = Number.parseInt(POST.quantity);
-        response_msg = `Added ${POST.quantity} to your cart!`;
-    }
-    response_msg = `Added ${POST.quantity} to your cart!`;
-    console.log(request.session);
-    response.json({"message":response_msg});
-    
 });
 
 

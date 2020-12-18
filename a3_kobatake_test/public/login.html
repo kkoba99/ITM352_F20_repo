@@ -19,8 +19,12 @@ function add_to_login() {
     postData('./process_login', { 'username':document.getElementById('username').value, 'password': document.getElementById('password').value})
   .then(data => {
     console.log(data);
-    document.getElementById(`on_login_show_username_in_navbar`).innerHTML = data.username;
+    document.getElementById('logged_in').innerHTML = data;
+
   });
+
+
+  
 }
 </script>
 
@@ -46,8 +50,18 @@ function add_to_login() {
         <li><a href="./jewelry_display.html" style="float: left;">Jewelry</a></li>
         <li><a href="./homedecor_display.html" style="float: left;">Home Decor</a></li>
         <li><a href="./cart.html" style="float: right;">Shopping Cart</a></li>
-        <li><a href="./login.html" style="float: right;">Login</a></li>
-        <span id="on_login_show_username_in_navbar"></span>
+        <li><a href="./login.html" style="float: right;" id="logged_in">Login</a></li>
+        <script>
+          // got this function from stack overflow https://stackoverflow.com/questions/10730362/get-cookie-by-name
+              function getCookie(name) {
+                  const value = `; ${document.cookie}`;
+                  const parts = value.split(`; ${name}=`);
+                  if (parts.length === 2) return parts.pop().split(';').shift();
+                  }
+                  
+                  document.getElementById('logged_in').innerHTML = "Welcome" + ' ' + getCookie('username')
+                 
+  </script>
         </ul>
     </div>
     
@@ -60,17 +74,21 @@ function add_to_login() {
                 <input type="text" name="username" size="40" placeholder="enter username"
                     id="username"><br/>
                 <br>
+                
                 <label>Password</label>
                 <input type="password" name="password" size="40" placeholder="enter password"><br />
                 <br>
-                <input type="submit" value="Submit" id="submit_login">
+                <input type="submit" value="Login" id="submit_login">
                 <br>
                 <br>
         </form>
 
+          <form name='logout_button' action='logout' method='POST'>
+            <input type="submit" value="Logout" id="logout_of_account">
+          </form>
         <br>
-
         <p>No account? Register <a href="./registration.html">here</a></p> 
+        
     
 </body>
 </html>
