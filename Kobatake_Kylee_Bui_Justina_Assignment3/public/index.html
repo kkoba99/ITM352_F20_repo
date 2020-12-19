@@ -1,4 +1,5 @@
-<!--Reference:https://www.w3schools.com/css/css_rwd_templates.asp -->
+<!--Kylee and Justina's Assignment 3 index page-->
+<!--Layout of page is referenced from https://www.w3schools.com/css/css_rwd_templates.asp -->
 
 <!DOCTYPE html>
 <html>
@@ -8,6 +9,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 <style>
   body,
@@ -53,22 +55,23 @@
         <a href="./cart.html" class="w3-bar-item w3-button"><i class="fa fa-usd"></i>Shopping Cart</a>
         <a href="./login.html" class="w3-bar-item w3-button" id="logged_in"></i>LOGIN</a>
         <script>
-            // got this function from stack overflow https://stackoverflow.com/questions/10730362/get-cookie-by-name
-                function getCookie(name) {
-                    const value = `; ${document.cookie}`;
-                    const parts = value.split(`; ${name}=`);
-                    if (parts.length === 2) return parts.pop().split(';').shift();
-                    }
-                    
-                    if (typeof getCookie('username') != 'undefined') {
-                    console.log('working');
-                  document.getElementById('logged_in').innerHTML = "Welcome" + ' ' + getCookie('username')
-                }
-                   
-    </script>
-      </div>
-      <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+          // Got this function from stack overflow https://stackoverflow.com/questions/10730362/get-cookie-by-name
+          // Gets cookie with username data and inserts it into the "login" button on navbar
+          function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+          }
 
+          if (typeof getCookie('username') != 'undefined') {
+            console.log('working');
+            document.getElementById('logged_in').innerHTML = "Welcome" + ' ' + getCookie('username')
+          }
+
+        </script>
+      </div>
+
+      <!-- Hide right-floated links on small screens and replace them with a menu icon -->
       <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
         onclick="w3_open()">
         <i class="fa fa-bars"></i>
@@ -151,7 +154,7 @@
   </div>
   <br>
 
-  <!--Reference: https://www.w3schools.com/howto/howto_js_slideshow.asp-->
+  <!--Referenced from https://www.w3schools.com/howto/howto_js_slideshow.asp-->
   <style>
     .center {
       display: block;
@@ -161,7 +164,7 @@
     }
   </style>
   <div class="slideshow-container">
-    
+
     <div class="mySlides">
       <img src="./images/quote0.gif" style="width:50%" class="center">
     </div>
@@ -196,6 +199,7 @@
     </div>
 
     <script>
+      // Referenced from https://www.w3schools.com/howto/howto_js_slideshow.asp
       var slideIndex = 0;
       showSlides();
 
@@ -374,6 +378,7 @@
     </footer>
 
     <script>
+      //Referenced from https://www.w3schools.com/howto/howto_js_slideshow.asp
       // Modal Image Gallery
       function onClick(element) {
         document.getElementById("img01").src = element.src;

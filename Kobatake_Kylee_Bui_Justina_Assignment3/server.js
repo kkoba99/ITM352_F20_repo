@@ -1,27 +1,30 @@
-var product_data = require('./public/product_data.js'); // This puts the product_data.js data into a variable called data 
+//Kylee and Justina's Assignment 3 server.js
+//Made with assistance from Professor Port 
+
+var product_data = require('./public/product_data.js'); // This puts the product_data.js data into a variable called product_data 
 var express = require('express'); 
 var app = express(); //loads express into "var app"
 var myParser = require("body-parser"); //loads body parser module in "var myParser"
 const querystring = require('querystring'); //loads querystring module in "const querystring"
 var fs = require('fs'); //loads file system module into "var fs"
-var cookieParser = require('cookie-parser')
-var session = require('express-session');
-const user_data_filename = 'userdata.json';
-const nodemailer = require("nodemailer");
+var cookieParser = require('cookie-parser') //loads cookie-parser module into "var cookieParser"
+var session = require('express-session'); //loads session module into "var session"
+const user_data_filename = 'userdata.json'; 
+const nodemailer = require("nodemailer"); //loads nodemailer module into "var nodemailer"
 const { send } = require('process');
 
 app.use(session({secret: "ITM352 rocks!"})); // automatically sets up the use of sessions
-app.use(cookieParser());
-app.use(myParser.urlencoded({ extended: true }));
-app.use(myParser.json());
+app.use(cookieParser()); // use cookieParser
+app.use(myParser.urlencoded({ extended: true })); //use urlencoded parser
+app.use(myParser.json()); // use json parser
 
+//if userdata.json file exists, put into variable data then parse it into users_reg_data
 if(fs.existsSync(user_data_filename)) {
     stats = fs.statSync(user_data_filename);
     console.log(`user_data.json has ${stats['size']} characters`);
 
     var data = fs.readFileSync(user_data_filename, 'utf-8');
     users_reg_data = JSON.parse(data);
-
 }
 
 app.all('*', function (request, response, next) {
@@ -29,8 +32,7 @@ app.all('*', function (request, response, next) {
     next(); //move on
 });
 
-
-
+//checks login inputs, if user exists & no errors, then send cookies with their username and email to indicate they "logged in"
 app.post("/process_login", function (request, response) {
     POST = request.body;
     if(typeof users_reg_data[request.body.username] != 'undefined') {
@@ -51,7 +53,6 @@ app.post("/process_login", function (request, response) {
           response.cookie('username', POST.username);
           response.cookie('email', user_email);
           response.redirect("./login.html");
-  
 
         } else {
             response.send(`Hey! ${request.body.password} doesn't match what we have for you!`)
@@ -61,13 +62,11 @@ app.post("/process_login", function (request, response) {
 }
 });
 
-
-
+//checks registration inputs, if no errors then write user information to userdata.json, send cookies with their username and email, then redirect back to registration
 app.post("/process_registration", function (request, response) {
 
     let POST = request.body;
     var errors = [];
-
 
     //username validation
     if (typeof   users_reg_data[request.body.newuser.toLowerCase] != 'undefined') { // if username exists in userdata.json
@@ -134,23 +133,16 @@ app.post("/process_registration", function (request, response) {
     }
 });
 
-
-
-
-
-
-
+//Made with assistance from Professor Port
 app.post("/add_to_cart", function (request, response) {
     // When the user hits the "add to cart" button for a clothing product, this app.post will add the quantity data to the session object
     var POST = request.body
     console.log(POST);
 
     //check if quantity is valid, if so add to session, otherwise return error
-    
     has_errors = false;
     qty = POST[`quantity`];
     if (qty != '' && isNonNegIntString(qty) == true) {
-
 
         if (has_errors == false) {
             if (typeof request.session.cart == 'undefined') {
@@ -171,14 +163,8 @@ app.post("/add_to_cart", function (request, response) {
         has_errors = true;
         console.log("errors");
         ;
-        
     };
-   
-    
 });
-
-
-
 
 app.post("/get_cart_data", function (request, response) {
     if (typeof request.session.cart == 'undefined') {
@@ -193,10 +179,7 @@ app.post("/get_login_data", function (request, response) {
         console.log(request.session.login)
     }
     response.json(request.session.login);
-
 });
-
-
 
 app.post("/go_to_invoice", function (request, response) {
     console.log(request.session.cart);
@@ -206,14 +189,13 @@ app.post("/go_to_invoice", function (request, response) {
                         window.history.back() </script>`;
 
             response.send(alertstr);
-           
-        
+         
     }
     //If logged in, let person go to invoice. If not, notify they need to log in.
     response.redirect("./invoice.html")
 });
 
-//code from assignment 3 examples from Professor Port
+//Code borrowed from Professor Port's Assignment 3 example 3 from https://dport96.github.io/ITM352/morea/180.Assignment3/reading-code-examples.html
 app.post("/complete_order", function (request, response) {
     var user_email = request.cookies.email;
     var invoice_str = `Thank you for buying from Heart Depot,${user_email} ! Your order will be shipped by the next business day`;
@@ -231,7 +213,6 @@ app.post("/complete_order", function (request, response) {
     }
       invoice_str += '</table>';
 
-   
     var transporter = nodemailer.createTransport({
         host: "mail.hawaii.edu",
         port: 25,
@@ -261,29 +242,16 @@ app.post("/complete_order", function (request, response) {
       });
 })
 
-
-
-
-//code borrowed from ALyssa Mencel's Assignmetn 3 server.js
+//Code below borrowed from ALyssa Mencel's ITM 352 Assignment 3 server.js on GitHub
 app.post('/logout', function (request, response) { 
-    request.session.destroy(); 
-    response.clearCookie("username");
-    response.clearCookie("email");
-    response.redirect('/index.html');
+    request.session.destroy(); //destroy session and it's data
+    response.clearCookie("username"); //clear cookie with username
+    response.clearCookie("email"); //clear cookie with email
+    response.redirect('/index.html'); //redirect to website index
 
 });
 
-
-
-
-
-
-
-
-
-
-
- //Modified from ITM352 Lab12, checks for invalid quantities
+//Modified from ITM352 Lab12, checks for invalid quantities
  function isNonNegIntString(string_to_check, returnErrors = false) {
     errors = []; // assume no errors at first
     if (Number(string_to_check) != string_to_check) { errors.push('<font color = "red">Not a number!</font color = "red">'); } // Check if quantity is a number
