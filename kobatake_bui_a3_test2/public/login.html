@@ -1,0 +1,98 @@
+<script>
+
+    // Example POST method implementation:
+async function postData(url = '', data = {}) {
+    
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+function add_to_login() {
+    postData('./process_login', { 'username':document.getElementById('username').value, 'password': document.getElementById('password').value})
+  .then(data => {
+    console.log(data);
+    document.getElementById('logged_in').innerHTML = data;
+
+  });
+
+
+  
+}
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./website-display-style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&effect=neon|Open Sans">
+    <title>Heart Depot</title>
+</head>
+<body>
+    <div class="header">
+        <img src="./images/headerr.jpg">
+    </div>
+
+    <div class="navbar">
+        <!-- modified from W3school's navbar example at https://www.w3schools.com/css/css_navbar_horizontal.asp--> 
+        <ul>
+        <li><a href="./index.html" style="float: left;">Home</a></li>
+        <li><a href="./clothing_display_page.html" style="float: left;">Clothing</a></li>
+        <li><a href="./jewelry_display.html" style="float: left;">Jewelry</a></li>
+        <li><a href="./homedecor_display.html" style="float: left;">Home Decor</a></li>
+        <li><a href="./cart.html" style="float: right;">Shopping Cart</a></li>
+        <li><a href="./login.html" style="float: right;" id="logged_in">Login</a></li>
+        <script>
+          // got this function from stack overflow https://stackoverflow.com/questions/10730362/get-cookie-by-name
+              function getCookie(name) {
+                  const value = `; ${document.cookie}`;
+                  const parts = value.split(`; ${name}=`);
+                  if (parts.length === 2) return parts.pop().split(';').shift();
+                  }
+
+                  if (typeof getCookie('username') != 'undefined') {
+                        console.log('working');
+                      document.getElementById('logged_in').innerHTML = "Welcome" + ' ' + getCookie('username')
+                    }
+     
+                 
+  </script>
+        </ul>
+    </div>
+    
+    <br>
+    <br>
+
+        <form name="login_form" action="process_login" method="POST">
+            <! -- To pass to server -->
+                <label>Username</label>
+                <input type="text" name="username" size="40" placeholder="enter username"
+                    id="username"><br/>
+                <br>
+                
+                <label>Password</label>
+                <input type="password" name="password" size="40" placeholder="enter password"><br />
+                <br>
+                <input type="submit" value="Login" id="submit_login">
+                <br>
+                <br>
+        </form>
+
+          <form name='logout_button' action='logout' method='POST'>
+            <input type="submit" value="Logout" id="logout_of_account">
+          </form>
+        <br>
+        <p>No account? Register <a href="./registration.html">here</a></p> 
+        
+    
+</body>
+</html>

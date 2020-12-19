@@ -1,0 +1,255 @@
+<!--Reference:https://www.w3schools.com/css/css_rwd_templates.asp-->
+<script src="./product_data.js" type="text/javascript">//Links product data to the invoice
+</script>
+
+<script>
+    //Code below is referenced from Justina Bui in ITM352
+    let params = (new URL(document.location)).searchParams; 
+    var quantities = []; 
+    if (params.has('submitPurchase')) { 
+        for (i = 0; i < products.length; i++) {
+            if (params.has(`quantity${i}`)) {
+                a_qty = params.get(`quantity${i}`);
+                quantities[i] = a_qty;
+            }
+            else {
+                document.write('No Form Submitted. Please Complete Purchase!')
+            }  
+            console.log(quantities); 
+        }
+    }
+    //Code above is referenced from Justina Bui in ITM352
+
+    //Code referenced from Daphne Oh's Invoice in Assignment 2 ITM352
+    if(params.has('username')){
+    var name = params.get('name');
+    var username = params.get('username');
+    var newusername = params.get('newfullname');
+  }
+   
+  function loadJSON(service, callback) {
+        var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        xobj.open('POST', service, false);
+        xobj.onreadystatechange = function () {
+            if (xobj.readyState == 4 && xobj.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                callback(xobj.responseText);
+            }
+        };
+        xobj.send(null);
+    }
+
+    loadJSON('get_cart_data', function (response) {
+         //Parsing JSON string into object
+        cart_data = JSON.parse(response);
+    });
+
+    console.log(cart_data);
+
+    loadJSON('get_login_data', function (response) {
+        // Parsing JSON string into object
+        login_data = JSON.parse(response);
+    });
+
+    console.log(login_data);
+</script>
+
+
+
+<<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Raleway", sans-serif
+    }
+
+    body,
+    html {
+        height: 100%;
+        line-height: 1.8;
+    }
+
+    .w3-bar .w3-button {
+        padding: 16px;
+    }
+</style>
+
+<body>
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-card" id="myNavbar">
+            <a href="./index.html" class="w3-bar-item w3-button w3-wide">Heart Depot</a>
+            <!-- Right-sided navbar links -->
+            <div class="w3-right w3-hide-small">
+                <a href="./clothing_display_page.html" class="w3-bar-item w3-button"><i class="fa fa-th"></i>
+                    Clothing</a>
+                <a href="./jewelry_display.html" class="w3-bar-item w3-button"><i class="fa fa-th"></i>Jewelry</a>
+                <a href="./homedecor_display.html" class="w3-bar-item w3-button"><i class="fa fa-th"></i>Home Decor</a>
+                <a href="./cart.html" class="w3-bar-item w3-button"><i class="fa fa-usd"></i>Shopping Cart</a>
+                <a href="./login.html" class="w3-bar-item w3-button" id="logged_in"></i>LOGIN</a>
+                <script>
+                    // got this function from stack overflow https://stackoverflow.com/questions/10730362/get-cookie-by-name
+                        function getCookie(name) {
+                            const value = `; ${document.cookie}`;
+                            const parts = value.split(`; ${name}=`);
+                            if (parts.length === 2) return parts.pop().split(';').shift();
+                            }
+                            
+                            if (typeof getCookie('username') != 'undefined') {
+                            console.log('working');
+                          document.getElementById('logged_in').innerHTML = "Welcome" + ' ' + getCookie('username')
+                        }
+                           
+            </script>
+            </div>
+            <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="w3_open()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar on small screens when clicking the menu icon -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
+        style="display:none" id="mySidebar">
+    </nav>
+    <div style="background-image: url('./images/background.png');
+  background-size: cover; height:150px; padding-top:100px;">
+    </div>
+
+    <div class="invoice_display">
+    <center>
+    <h1>Heart Depot Invoice</h1>
+        <main>
+
+            <h2>Thank you for shopping at Heart Depot 
+                <script>document.write(`<font color="pink">${login_data.username}</font>`)</script>
+                
+                <br> Below is your order:
+            </h2>
+      
+            <table class="invoice_display">
+                <script>
+                      subtotal = 0;
+                    for (pk in cart_data) {
+                        quantities = cart_data[pk];
+                        products = the_products[pk];
+                        for (i = 0; i < products.length; i++) {
+                            if (quantities[i] > 0) {
+                                extended_price = quantities[i] * products[i].price;
+                                subtotal = extended_price + subtotal;
+                                //code for shopping cart below is from https://designmodo.com/shopping-cart-ui/
+                                document.write(`
+                               
+                               
+                    <div class="item">
+                        <div class="buttons">
+                        <span class="delete-btn"></span>
+                        <span class="like-btn"></span>
+                        </div>
+                    
+                        <div class="image">
+                            <img src= "./images/${products[i].image}", style="width: 50px">
+                        </div>
+                    
+                        <div class="description">
+                            <p>${products[i].item}</p>
+                        <span></span>
+                        </div>
+                    
+                        <div class="quantity">
+                        <p>Quantity: ${quantities[i]}</p>
+                        </button>
+                        </div>
+                    
+                        <div class="total-price">$${products[i].price}</div>
+                    </div>
+
+
+ 
+                        `);  
+                         }
+                        }
+                    }
+                
+                    //Code above is referenced from Justina Bui's invoice in ITM352
+
+                    //Code below is from Invoice4 WOD
+                    // Tax formula
+                    var tax = subtotal * 0.0575 
+
+                    // Shipping formula
+                    if(subtotal<50.00) {
+                    shipping = 2.00;
+                    } else if (subtotal<=99.99) {
+                    shipping = 5.00
+                    } else {
+                    shipping = 0.05*subtotal; //Subtotals over $100 will be charged 5% of the subtotal amount
+                    }
+                    // Total formula
+                    var total = tax + subtotal 
+                
+                </script>
+
+                
+                    <script>
+                        //Generates the subtotal table row
+                        var subtotal_str =
+                            `<tr><td colspan="3">Subtotal</td><td>${subtotal.toFixed(2)}</td></tr>`;
+                            document.write(subtotal_str);
+                    </script>
+                
+                    <script> 
+                        //Generates the tax table row
+                        var tax_str =
+                            `<tr><td colspan="3">Tax</td><td>${tax.toFixed(2)}</td></tr>`;
+                            document.write(tax_str);
+                    </script>
+                
+                    <script>
+                        //Generates the shipping table row
+                        var ship_str =
+                            `<tr><td colspan="3">Shipping</td><td>${shipping.toFixed(2)}</td></tr>`;
+                            document.write(ship_str);
+                    </script>
+                
+                    <script>
+                        //Generates the total table row
+                        var total_str =
+                             `<tr><td colspan="3"><b>Total<b></td><td><b>${total.toFixed(2)}<b></td></tr>`;
+                            document.write(total_str);
+                    </script>
+               
+        </table>
+       
+
+        <form name="submit_order_button" action="./complete_order" method="POST">
+            <input type ="submit" value="Complete Purchase">
+            </form>
+
+        </div>
+
+        <div class="shipping_display">
+        <center><p><b>Shipping Policy:</b> A subtotal $0 - $49.99 will be $2 shipping, a subtotal $50 - $99.99 will be $5 shipping, and subtotals over $100 will be charged 5% of the subtotal amount</p></center>
+        </div>
+    </center>
+    <div style="background-image: url('./images/background.png');
+    background-size: cover; height:150px; padding-top:100px;">
+    </div>
+</body>
+</html>
+

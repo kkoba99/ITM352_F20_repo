@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Raleway", sans-serif;
+        text-align: center;
+        background-image: url("images/back1.jpg");
+    }
+
+    body,
+    html {
+        height: 100%;
+        line-height: 1.8;
+    }
+
+    .w3-bar .w3-button {
+        padding: 16px;
+    }
+
+    form {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-card" id="myNavbar">
+            <a href="./index.html" class="w3-bar-item w3-button w3-wide">Heart Depot</a>
+            <!-- Right-sided navbar links -->
+            <a href="./clothing_display_page.html" style="float: middle;" class="w3-bar-item w3-button"><i
+                    class="fa fa-th"></i>Clothing</a>
+            <a href="./jewelry_display.html" style="float: middle;" class="w3-bar-item w3-button"><i
+                    class="fa fa-th"></i>Jewelry</a>
+            <a href="./homedecor_display.html" style="float: middle;" class="w3-bar-item w3-button"><i
+                    class="fa fa-th"></i>Home Decor</a>
+            <a href="./cart.html" style="float: right;" class="w3-bar-item w3-button"><i class="fa fa-usd"></i>Shopping
+                Cart</a>
+        </div>
+        <div style="background-image: url('./images/background.png');
+        background-size: cover; height:150px; padding-top:100px;">
+        </div>
+    
+    <br>
+    <br>
+
+    <form name="registration_form" action="process_registration" method="POST"> 
+        <label id="newuser_label">Enter a Username</label>
+        <input type="text" name="newuser" size="40" placeholder="enter username" id="newuser"><span id="newusername_textbox_message_span" style="color: red; font-family: Kanit;"></span></br>
+        <br>
+        <label>Enter your Full Name</label>
+        <input type="text" name="newfullname" size="40" placeholder="enter full name"><span id="newfullname_textbox_message_span" style="color: red; font-family: Kanit;"></span><br />
+        <br>
+        <label>Enter a Password</label>
+        <input type="password" name="newpass" size="40" placeholder="enter password"><span id="newpassword_textbox_message_span" style="color: red; font-family: Kanit;"></span><br />
+        <br>
+        <label>Confirm Password</label>
+        <input type="password" name="newpass_confirm" size="40" placeholder="enter password"><span id="confirmpassword_textbox_message_span" style="color: red; font-family: Kanit;"></span><br />
+        <br>
+        <label>Enter Email</label>
+        <input type="email" name="newemail" size="40" placeholder="enter email"><span id="newemail_textbox_message_span" style="color: red; font-family: Kanit;"></span><br />
+        <br>
+        <input type="submit" value="Register" name="register_user" id="register">
+    </form>
+    <div style="background-image: url('./images/background.png');
+    background-size: cover; height:150px; padding-top:100px;">
+        </div>
+</body>
+</html>
